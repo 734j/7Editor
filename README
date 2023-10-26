@@ -1,0 +1,7 @@
+This is my take on a so called "Line editor"
+Its a crude and simple line editor.
+
+TODO:
+- Create print_7ed() to print the focused line
+- Create edit mode to actually make edits to the file
+- Create write mode to write changes. Might remove writemode.c and implement it within the edit mode file.
