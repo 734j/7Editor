@@ -52,6 +52,6 @@ int startmode(char filename[]);
 #ifndef PRINT_7ED_H
 #define PRINT_7ED_H
 
-int print_7ed();
+int print_7ed(char filename[], long focus);
 
 #endif /* PRINT_7ED_H */

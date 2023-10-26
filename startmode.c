@@ -71,7 +71,7 @@ int startmode(char filename[]) {
             break;
             case 'P':
             case 'p':
-                print_7ed();
+                print_7ed(filename, focus);
                 
             break;
             case 'E':
