@@ -71,8 +71,14 @@ int startmode(char filename[]) {
             break;
             case 'P':
             case 'p':
-                print_7ed(filename, focus);
                 
+                char *line;
+                int ret = GET_LINE(filename, focus, &line);
+                if (ret == 1) {
+                    return EXIT_FAILURE;
+                }
+                printf("%s", line);
+                free(line);
             break;
             case 'E':
             case 'e':

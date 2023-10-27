@@ -49,9 +49,9 @@ int startmode(char filename[]);
 #endif /* STARTMODE_H */
 
 
-#ifndef PRINT_7ED_H
-#define PRINT_7ED_H
+#ifndef GET_LINE_H
+#define GET_LINE_H
 
-int print_7ed(char filename[], long focus);
+int GET_LINE(char filename[], long focus, char **line);
 
-#endif /* PRINT_7ED_H */
+#endif /* GET_LINE_H */

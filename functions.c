@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "7ed.h"
 #include <time.h>
+#include <string.h>
 
 void CONFIRM() {
     struct termios old,new;
@@ -120,42 +121,91 @@ void shuffle(char arr[], int n) {
     }
 }
 
-int print_7ed(char filename[],long focus) {
+int GET_LINE(char filename[], long focus, char **line) { // Making this function was hell. Hardest thing ive coded in a while.
     
-    size_t line_count = 0; // Counter starting at 0
     FILE *file;
-    file = fopen(filename,"rb"); // Open file
+    file = fopen(filename,"r"); // Open file
 
     if (file == NULL) { // Check if you can open file
         fprintf(stderr, "Cannot open file.\n");
         return 1;
     }
+    
+    if (focus == 1) {
+        int c1_count = 0;
+        while (1) {
+            char c = fgetc(file);
+            if (c == '\n') {
+                c1_count++;
+                break;
+            } else if (c == EOF) {
+                break;
+            } else {
+                c1_count++;
+            }
+        }
+        char c1buf[c1_count];
+        fseek(file, 0, SEEK_SET);
+        
+        int i = 0;
 
-    char buffer[BUF_SZ_4]; // Creates buffer with size of BUF_SZ_4
-    int breakflag = 1;
-    int chbuf_i;
-    while (1) {
-        size_t bytes_read = fread(buffer, 1, BUF_SZ_4, file); // puts chars from file in to buffer and returns the amount of bytes.
-        for (size_t i = 0 ; i < bytes_read; i++) { 
-            if (buffer[i] == '\n') { // Searches through the buffer for newlines.
+        for (; i < c1_count ; i++) {
+            c1buf[i] = fgetc(file);
+        }
+        c1buf[i] = '\0';
+        *line = (char *)malloc(strlen(c1buf) + 1);
+
+        if (*line != NULL) {
+            strcpy(*line, c1buf);
+        }
+        //printf("%s", c1buf); // The purpose of this if statement is that it will only print line 1. Not too elegant of a way to handle this but its the only way i knew how to.
+    } else {
+
+        focus--;
+        size_t line_count = 0; // Counter starting at 0
+        size_t save_i;
+        for (size_t i = 0; ; i++) {
+            char c = fgetc(file);
+            if (feof(file)) { // If end of file is encountered then break
+                break; 
+            }
+            if (c == '\n') {
                 line_count++;
-                if (line_count == (size_t)focus) { //When the line count is the same as the focus
-                    //printf("%ld\n", line_count);  // The program will save the position.
-                    breakflag = 0;
-                    chbuf_i = i;
-                    
+                if (line_count == (size_t)focus) {
+                    save_i = i;
                     break;
                 }
-            } 
+            }
         }
+        fseek(file, save_i+1, SEEK_SET);
+        
+        int c2_count = 0;
+        while (1) {
+            char c = fgetc(file);
+            if (c == '\n') {
+                c2_count++;
+                break;
+            } else if (c == EOF) {
+                break;
+            } else {
+                c2_count++;
+            }
+        }
+        
+        fseek(file, save_i+1, SEEK_SET);
+        char c2buf[c2_count];
+        int i = 0;
+        for (; i < c2_count ; i++) {
+            c2buf[i] = fgetc(file);
+        }
+        c2buf[i] = '\0';
+        *line = (char *)malloc(strlen(c2buf) + 1);
 
-        if (feof(file) || breakflag == 0) { // If end of file is encountered then break
-            break; 
+        if (*line != NULL) {
+            strcpy(*line, c2buf);
         }
     }
     
-    fclose(file);
-    
-    return 0;
-
+fclose(file);
+return 0;
 }
