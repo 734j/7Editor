@@ -79,10 +79,22 @@ int startmode(char filename[]) {
                 }
                 printf("%s", line);
                 free(line);
+
             break;
             case 'E':
             case 'e':
                 printf("EDIT MODE\n");
+            break;
+            case 'C':
+            case 'c':
+                
+                size_t Flines;
+                int returnval = COUNT_LINES_IN_FILE(filename, &Flines);
+                if (returnval == 1) {
+                    return EXIT_FAILURE;
+                }
+                fprintf(stdout,"%s %ld lines\n", filename, Flines);
+
             break;
             case 'Q':
             case 'q':

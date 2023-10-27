@@ -123,6 +123,16 @@ void shuffle(char arr[], int n) {
 
 int GET_LINE(char filename[], long focus, char **line) { // Making this function was hell. Hardest thing ive coded in a while.
     
+    size_t lines;
+    int ret = COUNT_LINES_IN_FILE(filename, &lines);
+    if (ret == 1) {
+        return EXIT_FAILURE;
+    }
+
+    if ((long)lines < focus) {
+        return EXIT_FAILURE;
+    }
+
     FILE *file;
     file = fopen(filename,"r"); // Open file
 
