@@ -73,11 +73,13 @@ int startmode(char filename[]) {
             case 'p':
                 
                 char *line;
-                int ret = GET_LINE(filename, focus, &line);
+                size_t start;
+                int ret = GET_LINE(filename, focus, &line, &start);
                 if (ret == 1) {
                     return EXIT_FAILURE;
                 }
                 printf("%s", line);
+                //printf("%ld", start);
                 free(line);
 
             break;

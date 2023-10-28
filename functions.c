@@ -121,16 +121,16 @@ void shuffle(char arr[], int n) {
     }
 }
 
-int GET_LINE(char filename[], long focus, char **line) { // Making this function was hell. Hardest thing ive coded in a while.
+int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Making this function was hell. Hardest thing ive coded in a while.
     
     size_t lines;
     int ret = COUNT_LINES_IN_FILE(filename, &lines);
-    if (ret == 1) {
-        return EXIT_FAILURE;
+    if (ret == 1) {                 
+        return EXIT_FAILURE;        
     }
 
-    if ((long)lines < focus) {
-        return EXIT_FAILURE;
+    if ((long)lines < focus) { // check if focus is bigger than the amount of
+        return EXIT_FAILURE;    // lines in the actual file and returns exit failure
     }
 
     FILE *file;
@@ -153,7 +153,7 @@ int GET_LINE(char filename[], long focus, char **line) { // Making this function
             } else {
                 c1_count++;
             }
-        }
+        }                       // checks how many characters are in the first line
         char c1buf[c1_count];
         fseek(file, 0, SEEK_SET);
         
@@ -166,8 +166,10 @@ int GET_LINE(char filename[], long focus, char **line) { // Making this function
         *line = (char *)malloc(strlen(c1buf) + 1);
 
         if (*line != NULL) {
-            strcpy(*line, c1buf);
+            strcpy(*line, c1buf); // Return line 1
         }
+
+        *start = 0;
         //printf("%s", c1buf); // The purpose of this if statement is that it will only print line 1. Not too elegant of a way to handle this but its the only way i knew how to.
     } else {
 
@@ -214,6 +216,7 @@ int GET_LINE(char filename[], long focus, char **line) { // Making this function
         if (*line != NULL) {
             strcpy(*line, c2buf);
         }
+        *start = save_i+1;
     }
     
 fclose(file);

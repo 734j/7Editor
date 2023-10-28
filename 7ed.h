@@ -52,6 +52,6 @@ int startmode(char filename[]);
 #ifndef GET_LINE_H
 #define GET_LINE_H
 
-int GET_LINE(char filename[], long focus, char **line);
+int GET_LINE(char filename[], long focus, char **line, size_t *start);
 
 #endif /* GET_LINE_H */
