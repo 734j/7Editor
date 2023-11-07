@@ -55,3 +55,10 @@ int startmode(char filename[]);
 int GET_LINE(char filename[], long focus, char **line, size_t *start);
 
 #endif /* GET_LINE_H */
+
+#ifndef EDITMODE_H
+#define EDITMODE_H
+
+int editmode(char filename[], long focus);
+
+#endif /* EDITMODE_H */

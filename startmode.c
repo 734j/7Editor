@@ -5,6 +5,25 @@
 #include <errno.h>
 #include "7ed.h"
 
+int NCAT(char filename[]) {
+
+    FILE *file;
+    file = fopen(filename,"r");
+
+    if (file == NULL) {
+        fprintf(stderr, "Cannot open file.\n");
+        return 1;
+    }
+
+    char buffer[BUF_SZ_2];
+    size_t bytes_read;
+    while ((bytes_read = fread(buffer, 1, BUF_SZ_2, file)) > 0) {
+        fwrite(buffer, 1, bytes_read, stdout);
+    }
+    fclose(file);
+    return 0;
+}
+
 int startmode(char filename[]) {
 
     size_t Flines;
@@ -43,7 +62,7 @@ int startmode(char filename[]) {
                     Lfocus = strtol(buf, &endptr, 10);
                     errno = 0;
                     if (errno == ERANGE) {
-                        printf("Sorry, this number is too small or too large.\n");
+                        fprintf(stderr, "Sorry, this number is too small or too large.\n");
                         success = 0;
                     }
                     else if (endptr == buf) {
@@ -63,7 +82,7 @@ int startmode(char filename[]) {
                 } while (!success);
 
                 if (Lfocus < 1 || Lfocus > (long)Flines) {
-                    fprintf(stdout, "L is either less than 1 or more than %ld\n", Flines);
+                    fprintf(stderr, "L is either less than 1 or more than %ld\n", Flines);
                 } else {
                     focus = Lfocus;
                 }
@@ -78,32 +97,38 @@ int startmode(char filename[]) {
                 if (ret == 1) {
                     return EXIT_FAILURE;
                 }
-                printf("%s", line);
+                fprintf(stdout, "%s", line);
                 //printf("%ld", start);
                 free(line);
 
             break;
             case 'E':
             case 'e':
-                printf("EDIT MODE\n");
+                
+                editmode(filename, focus);
+
             break;
             case 'C':
             case 'c':
                 
-                size_t Flines;
-                int returnval = COUNT_LINES_IN_FILE(filename, &Flines);
+                size_t CFlines;
+                int returnval = COUNT_LINES_IN_FILE(filename, &CFlines);
                 if (returnval == 1) {
                     return EXIT_FAILURE;
                 }
-                fprintf(stdout,"%s %ld lines\n", filename, Flines);
+                fprintf(stdout,"%s %ld lines\n", filename, CFlines);
 
             break;
             case 'Q':
             case 'q':
                 return EXIT_SUCCESS;
             break;
+            case 'a':
+            case 'A':
+                NCAT(filename);
+            break;
             default:
-                printf("?\n");
+                fprintf(stdout, "?\n");
         }
 
 
