@@ -11,7 +11,7 @@ int NCAT(char filename[]) {
     file = fopen(filename,"r");
 
     if (file == NULL) {
-        fprintf(stderr, "Cannot open file.\n");
+        fprintf(stderr, "Cannot open file. NCAT\n");
         return 1;
     }
 
@@ -126,6 +126,12 @@ int startmode(char filename[]) {
             case 'a':
             case 'A':
                 NCAT(filename);
+            break;
+            case 'n':
+            case 'N':
+
+                NEW_LINE(filename);
+
             break;
             default:
                 fprintf(stdout, "?\n");

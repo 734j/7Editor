@@ -16,10 +16,10 @@ if (ret == 1) {
 
 FILE *file;
 FILE *temp;
-file = fopen(filename,"r+"); // Open file
-temp = fopen("temp.7ed","r+");
+file = fopen(filename,"r"); // Open file
+temp = fopen("temp.7ed","w+");
 if (file == NULL || temp == NULL) { // Check if you can open file
-    fprintf(stderr, "Cannot open file.\n");
+    fprintf(stderr, "Cannot open file. write_line\n");
     return 1;
 }
 
@@ -54,18 +54,83 @@ for (;; counter++) {  // for loop that puts contents of file in to temp
 
 }
 fseek(temp, 0, SEEK_SET); // reset both files to start at 0 so it doesnt mess with fread and fwrite
-fseek(file, 0, SEEK_SET);
+fclose(file);
+file = fopen(filename, "w");
+if (file == NULL) { // Check if you can open file
+    fprintf(stderr, "Cannot open file for writing.\n");
+    return 1;
+}
 char buffer[BUF_SZ_2];
 size_t bytes_read;
 while ((bytes_read = fread(buffer, 1, BUF_SZ_2, temp)) > 0) { // Write contents of temp to file
     fwrite(buffer, 1, bytes_read, file);
 }
-
 free(line);
 fclose(file);
 fclose(temp);
-
+remove("temp.7ed");
 return 0;
+
+}
+
+
+int NEW_LINE(char filename[]) {
+
+    long new_line_pos;
+    long new_line_pos_temp;
+    char buf[1024];
+    int success;
+
+    do {
+        fprintf(stdout, "Create a new line after: ");
+        if (!fgets(buf, 1024, stdin)) {
+            fprintf(stderr, "Too many characters\n");
+            break;
+        }
+        char *endptr;
+
+        new_line_pos_temp = strtol(buf, &endptr, 10);
+        errno = 0;
+        if (errno == ERANGE) {
+            fprintf(stderr, "Sorry, this number is too small or too large.\n");
+            success = 0;
+        }
+        else if (endptr == buf) {
+            // no character was read
+            success = 0;
+        }
+        else if (*endptr && *endptr != '\n') {
+            success = 0;
+        }
+
+        else {
+            success = 1;
+        }
+
+        } while (!success);
+
+        if (new_line_pos_temp < 1) {
+            fprintf(stderr, "The new line can not be under 0!\n");
+            return 1;
+        } else {
+            new_line_pos = new_line_pos_temp;
+
+            char *line;
+            size_t start;
+            int ret = GET_LINE(filename, new_line_pos, &line, &start);
+            if (ret == 1) {
+                return 1;
+            }
+
+            size_t len = strlen(line);
+            char *newline_and_line = malloc(len+2);
+            strcpy(newline_and_line, line);
+            strcat(newline_and_line, "\n");
+            write_line(filename, new_line_pos, newline_and_line, 1);
+            free(newline_and_line);
+        }
+
+    return 0;
 
 }
 

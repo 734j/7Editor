@@ -55,7 +55,7 @@ int COUNT_LINES_IN_FILE (char filename[], size_t *lines) {
     file = fopen(filename,"rb"); // Open file
 
     if (file == NULL) { // Check if you can open file
-        fprintf(stderr, "Cannot open file.\n");
+        fprintf(stderr, "Cannot open file. COUNT_LINES_IN_FILE\n");
         return 1;
     }
     fseek(file, -1, SEEK_END);
@@ -128,7 +128,7 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
     file = fopen(filename,"r"); // Open file
 
     if (file == NULL) { // Check if you can open file
-        fprintf(stderr, "Cannot open file.\n");
+        fprintf(stderr, "Cannot open file GET_LINE.\n");
         return 1;
     }
     
