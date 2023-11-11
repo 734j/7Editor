@@ -4,6 +4,6 @@ Its a crude and simple line editor.
 TODO:
 - Create a function to retrieve a line from file (DONE) It's called: GET_LINE(char filename[], long focus, char **line)
 - Create edit mode to actually make edits to the file (DONE)
-- Find and fix bugs
+- Find and fix bugs. Fixed one bug in write_line() function. (btw this was written with 7ed!!!)
 - Fix weird quirks that i did not think about
 - clean up code
