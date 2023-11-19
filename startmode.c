@@ -4,6 +4,7 @@
 #include <string.h>
 #include <errno.h>
 #include "7ed.h"
+#include <stdint.h>
 
 int NCAT(char filename[]) {
 
@@ -26,18 +27,18 @@ int NCAT(char filename[]) {
 
 int startmode(char filename[]) {
 
-    size_t Flines;
+    uint64_t Flines;
     int returnval = COUNT_LINES_IN_FILE(filename, &Flines);
     if (returnval == 1) {
         return EXIT_FAILURE;
     }
-    fprintf(stdout,"%s %ld lines\n", filename, Flines);
+    fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
-    long focus = 1;
+    uint64_t focus = 1;
 
     while(1) {
 
-        fprintf(stdout, "(%ld): ", focus);
+        fprintf(stdout, "(%lu): ", focus);
         char command = getchar();
         if (command == '\n') { 
             continue; 
@@ -47,7 +48,7 @@ int startmode(char filename[]) {
         switch (command) {
             case 'L':
             case 'l':
-                long Lfocus;
+                uint64_t Lfocus;
                 char buf[1024];
                 int success;
 
@@ -81,8 +82,8 @@ int startmode(char filename[]) {
 
                 } while (!success);
 
-                if (Lfocus < 1 || Lfocus > (long)Flines) {
-                    fprintf(stderr, "L is either less than 1 or more than %ld\n", Flines);
+                if (Lfocus < 1 || Lfocus > Flines) {
+                    fprintf(stderr, "L is either less than 1 or more than %lu\n", Flines);
                 } else {
                     focus = Lfocus;
                 }
@@ -111,12 +112,12 @@ int startmode(char filename[]) {
             case 'C':
             case 'c':
                 
-                size_t CFlines;
+                uint64_t CFlines;
                 int returnval = COUNT_LINES_IN_FILE(filename, &CFlines);
                 if (returnval == 1) {
                     return EXIT_FAILURE;
                 }
-                fprintf(stdout,"%s %ld lines\n", filename, CFlines);
+                fprintf(stdout,"%s %zu lines\n", filename, CFlines);
 
             break;
             case 'Q':

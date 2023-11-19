@@ -4,6 +4,7 @@
 #include "7ed.h"
 #include <time.h>
 #include <string.h>
+#include <stdint.h>
 
 void CONFIRM() {
     struct termios old,new;
@@ -20,7 +21,7 @@ void CONFIRM() {
 }
 
 int CHOICE() {
-    int choice;
+    char choice;
 
     do {
 
@@ -46,11 +47,11 @@ int CHOICE() {
     return EXIT_FAILURE;
 }
 
-int COUNT_LINES_IN_FILE (char filename[], size_t *lines) {
+int COUNT_LINES_IN_FILE (char filename[], uint64_t *lines) {
 
     // Does not follow posix because this function accounts for if the last line does not end with a newline.
 
-    size_t line_count = 0; // Counter starting at 0
+    uint64_t line_count = 0; // Counter starting at 0
     FILE *file;
     file = fopen(filename,"rb"); // Open file
 

@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "7ed.h"
+#include <stdint.h>
 
 #define USAGE ""
 #define PROGRAM_NAME "7ed"

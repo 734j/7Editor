@@ -4,6 +4,7 @@
 #include <string.h>
 #include <errno.h>
 #include "7ed.h"
+#include <stdint.h>
 
 int write_line(char filename[], long focus, char editbuffer[], size_t editbuffer_size) {
 
@@ -74,7 +75,7 @@ return 0;
 }
 
 
-int NEW_LINE(char filename[]) { // testing this now with -fsanitize=address !! Please work!
+int NEW_LINE(char filename[]) { // doin this test again
 
     long new_line_pos;
     long new_line_pos_temp;

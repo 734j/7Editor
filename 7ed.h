@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdint.h>
 
 #define BUF_SZ_256 256
 #define BUF_SZ_512 512
