@@ -156,7 +156,7 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
                 c1_count++;
             }
         }                       // checks how many characters are in the first line
-        char c1buf[c1_count];
+        char c1buf[c1_count+1];
         fseek(file, 0, SEEK_SET);
         
         int i = 0;
@@ -207,7 +207,7 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
         }
         
         fseek(file, save_i+1, SEEK_SET);
-        char c2buf[c2_count];
+        char c2buf[c2_count+1];
         int i = 0;
         for (; i < c2_count ; i++) {
             c2buf[i] = fgetc(file);

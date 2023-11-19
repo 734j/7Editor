@@ -74,7 +74,7 @@ return 0;
 }
 
 
-int NEW_LINE(char filename[]) {
+int NEW_LINE(char filename[]) { // testing this now with -fsanitize=address !! Please work!
 
     long new_line_pos;
     long new_line_pos_temp;
