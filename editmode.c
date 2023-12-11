@@ -77,14 +77,14 @@ return 0;
 
 int NEW_LINE(char filename[]) { // doin this test again
 
-    long new_line_pos;
-    long new_line_pos_temp;
+    long new_line_pos; // The "focus" that the newline will be inserted afterwards
+    long new_line_pos_temp; // temp
     char buf[1024];
     int success;
 
     do {
         fprintf(stdout, "Create a new line after: ");
-        if (!fgets(buf, 1024, stdin)) {
+        if (!fgets(buf, 1024, stdin)) {    // take input from user
             fprintf(stderr, "Too many characters\n");
             break;
         }
@@ -110,25 +110,29 @@ int NEW_LINE(char filename[]) { // doin this test again
 
         } while (!success);
 
-        if (new_line_pos_temp < 1) {
+        if (new_line_pos_temp < 0) {
             fprintf(stderr, "The new line can not be under 0!\n");
             return 1;
         } else {
             new_line_pos = new_line_pos_temp;
 
-            char *line;
-            size_t start;
-            int ret = GET_LINE(filename, new_line_pos, &line, &start);
+            char *line; // line is the line before the newline
+                                // line2 is the line right after line
+            size_t start; // start is the position at the start of line
+                                  // start2 is the position at the start of line2
+            int ret = GET_LINE(filename, new_line_pos+1, &line, &start);
             if (ret == 1) {
                 return 1;
             }
 
             size_t len = strlen(line);
-            char *newline_and_line = malloc(len+2);
-            strcpy(newline_and_line, line);
-            strcat(newline_and_line, "\n");
-            write_line(filename, new_line_pos, newline_and_line, 1);
-            free(newline_and_line);
+            char to_be_written[len+2];
+            to_be_written[0] = '\n';
+            to_be_written[1] = '\0';
+            strcat(to_be_written, line);
+            
+            write_line(filename, new_line_pos+1, to_be_written, len+1);
+            free(line);
         }
 
     return 0;

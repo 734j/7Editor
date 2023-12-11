@@ -133,17 +133,6 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
         return 1;
     }
     
-    /*
-    size_t lines;
-    int ret = COUNT_LINES_IN_FILE(filename, &lines);
-    if (ret == 1) {                 
-        return EXIT_FAILURE;        
-    }
-
-    if ((long)lines < focus) { // check if focus is bigger than the amount of
-        return EXIT_FAILURE;    // lines in the actual file and returns exit failure
-    }
-    */
     if (focus == 1) {
         int c1_count = 0;
         while (1) {
@@ -172,7 +161,8 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
             strcpy(*line, c1buf); // Return line 1
         }
 
-        *start = 0;
+        *start = 0; // Is start the start of where line
+        
         //printf("%s", c1buf); // The purpose of this if statement is that it will only print line 1. Not too elegant of a way to handle this but its the only way i knew how to.
     } else {
 
@@ -219,7 +209,8 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
         if (*line != NULL) {
             strcpy(*line, c2buf);
         }
-        *start = save_i+1;
+        *start = save_i+1; // not sure but i think it saves the start position of the line
+        
     }
     
 fclose(file);

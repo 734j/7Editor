@@ -11,7 +11,7 @@
 #ifndef COUNT_LINES_IN_FILE_H
 #define COUNT_LINES_IN_FILE_H
 
-int COUNT_LINES_IN_FILE (char filename[], size_t *lines);
+int COUNT_LINES_IN_FILE (char filename[], uint64_t *lines);
 
 #endif /* COUNT_LINES_IN_FILE_H */
 
