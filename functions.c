@@ -168,7 +168,7 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
 
         focus--;
         size_t line_count = 0; // Counter starting at 0
-        size_t save_i;
+        size_t save_i = 0;
         for (size_t i = 0; ; i++) {
             char c = fgetc(file);
             if (feof(file)) { // If end of file is encountered then break
@@ -213,6 +213,6 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
         
     }
     
-fclose(file);
-return 0;
+    fclose(file);
+    return 0;
 }

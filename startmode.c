@@ -48,7 +48,7 @@ int startmode(char filename[]) {
         switch (command) {
             case 'L':
             case 'l':
-                uint64_t Lfocus;
+                uint64_t Lfocus = 0;
                 char buf[1024];
                 int success;
 
@@ -130,7 +130,7 @@ int startmode(char filename[]) {
             break;
             case 'n':
             case 'N':
-
+                
                 NEW_LINE(filename);
 
             break;
