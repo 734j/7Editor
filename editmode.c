@@ -144,12 +144,13 @@ int NEW_LINE(char filename[]) { // doin this test again
                     FILE *file;
                     file = fopen(filename, "a");
                     fputc('\n', file);
+                    fputc('\n', file);
                     fclose(file);
                     return 0;
                 }
 
             }
-            printf("continuing\n");
+        
             char *line; // line is the line before the newline
                                 // line2 is the line right after line
             size_t start; // start is the position at the start of line
