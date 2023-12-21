@@ -92,41 +92,9 @@ int check_end_newline(char filename[]) {
 
 }
 
-int NEW_LINE(char filename[]) { // doin this test again
+int NEW_LINE(char filename[], long new_line_pos_temp) { // doin this test again
 
-    long new_line_pos; // The "focus" that the newline will be inserted afterwards
-    long new_line_pos_temp = 0; // temp
-    char buf[1024];
-    int success;
-
-    do {
-        fprintf(stdout, "Create a new line after: ");
-        if (!fgets(buf, 1024, stdin)) {    // take input from user
-            fprintf(stderr, "Too many characters\n");
-            break;
-        }
-        char *endptr;
-
-        new_line_pos_temp = strtol(buf, &endptr, 10);
-        errno = 0;
-        if (errno == ERANGE) {
-            fprintf(stderr, "Sorry, this number is too small or too large.\n");
-            success = 0;
-        }
-        else if (endptr == buf) {
-            // no character was read
-            success = 0;
-        }
-        else if (*endptr && *endptr != '\n') {
-            success = 0;
-        }
-
-        else {
-            success = 1;
-        }
-
-        } while (!success);
-
+        long new_line_pos;
         if (new_line_pos_temp < 0) {
             fprintf(stderr, "The new line can not be under 0!\n");
             return 1;
@@ -140,7 +108,7 @@ int NEW_LINE(char filename[]) { // doin this test again
                 if (clif == 1) {
                     return 1;
                 }
-                if (linecount == (size_t)new_line_pos) {
+                if (linecount == (size_t)new_line_pos) { // if the file ends without a newline and the user wants to put a newline at the end, then this code within the if-statement will do that.
                     FILE *file;
                     file = fopen(filename, "a");
                     fputc('\n', file);
@@ -174,6 +142,42 @@ int NEW_LINE(char filename[]) { // doin this test again
 
 }
 
+int remove_line_contents(char filename[], long focus) {
+
+    char *line;
+    size_t start;
+    int ret = GET_LINE(filename, focus, &line, &start);
+    if (ret == 1) {
+        return 1;
+    }
+    
+    int cen = check_end_newline(filename); // check if file ends without newline
+                                           // check_end_newline returns 0 if ther is a newline
+                                           // it returns -1 if ther is none
+    char editbuffer[1] = {'\0'};
+    write_line(filename, focus, editbuffer, 1); // remove contents in line
+
+    if (cen == -1) { // put newline at end if cen == -1
+        NEW_LINE(filename, focus-1);
+    }
+    free(line);
+    return 0;
+
+}
+
+int delete_line(char filename[], long focus) {
+
+    char *line;
+    size_t start;
+    int ret = GET_LINE(filename, focus, &line, &start);
+    if (ret == 1) {
+        return 1;
+    }
+    
+    free(line);
+    return 0;
+}
+
 int editmode(char filename[], long focus) {
 
     char *line;
@@ -192,7 +196,10 @@ int editmode(char filename[], long focus) {
 
         fgets(editbuffer, BUF_SZ_2, stdin);
 
-        if (editbuffer[0] == '\n') { continue; }
+        if (editbuffer[0] == '\n') { 
+            fprintf(stdout, "No changes\n");
+            return 0;
+        }
 
         fprintf(stdout, "Do you want to write the changes?\n");
         int yesno = CHOICE();
