@@ -109,7 +109,6 @@ int startmode(char filename[]) {
                     return EXIT_FAILURE;
                 }
                 fprintf(stdout, "%s", line);
-                //printf("%ld", start);
                 free(line);
 
             break;
@@ -189,7 +188,7 @@ int startmode(char filename[]) {
                     return 1;
                 }
                 int increment = 0;
-                if (focus == 1) { // if we are at line 1 then increment becomes 1
+                if (focus == 1) { // checks if its line 1. This is so that we can remove the newline properly.
                     increment++;
                 }
                 int rlc = remove_line_contents(filename, focus);

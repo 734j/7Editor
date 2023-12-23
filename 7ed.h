@@ -8,8 +8,6 @@
 #define BUF_SZ_4 4096
 #define BUF_SZ_8 8192
 
-
-
 int count_lines_in_file(char filename[], uint64_t *lines);
 
 int count_lines_in_file_posix(char filename[], size_t *lines);

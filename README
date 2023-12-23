@@ -2,14 +2,3 @@ This is my take on a so called "Line editor"
 Its a crude and simple line editor.
 
 WARNING: Do not use this program on any files that you dont want to risk damaging, deleting or overwriting. I can not gaurantee that this program will function as expected.
-
-TODO:
-- Create a function to retrieve a line from file (DONE) It's called: GET_LINE(char filename[], long focus, char **line)
-- Create edit mode to actually make edits to the file (DONE)
-- Find and fix bugs. Fixed one bug in write_line() function. (btw this was written with 7ed!!!)
-- Create functionality to actually add new lines. You cant actually add a line on the end of the file. You also cant just add a line and move everything under it one line down. I will get to fixing that though.
-
-
-
-
-

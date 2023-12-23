@@ -14,7 +14,6 @@ int delete_specified_newline(char filename[], long focus) { // special version o
     if (ret == 1) {
         return EXIT_FAILURE;
     }
-    // TODO: Some code that checks if its the first line in the file. Because such a situation might cause a problem. Im not entirely sure yet.
 
     start = start-1; // decrement by 1 to place start position at the newline
 
