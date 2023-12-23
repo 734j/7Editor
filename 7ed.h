@@ -10,22 +10,24 @@
 
 
 
-int COUNT_LINES_IN_FILE (char filename[], uint64_t *lines);
+int count_lines_in_file(char filename[], uint64_t *lines);
 
-int COUNT_LINES_IN_FILE_POSIX (char filename[], size_t *lines);
+int count_lines_in_file_posix(char filename[], size_t *lines);
 
-void CONFIRM();
+void confirm();
 
-int CHOICE();
+int choice();
 
 void shuffle(char arr[], int n);
 
 int startmode(char filename[]);
 
-int GET_LINE(char filename[], long focus, char **line, size_t *start);
+int get_line(char filename[], long focus, char **line, size_t *start);
 
 int editmode(char filename[], long focus);
 
-int NEW_LINE(char filename[], long new_line_pos_temp);
+int new_line(char filename[], long new_line_pos_temp);
 
 int remove_line_contents(char filename[], long focus);
+
+int delete_specified_newline(char filename[], long focus);

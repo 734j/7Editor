@@ -6,21 +6,21 @@
 #include <string.h>
 #include <stdint.h>
 
-void CONFIRM() {
+void confirm() {
     struct termios old,new;
 
-    tcgetattr(fileno(stdin),&old); // gets something?
-    tcgetattr(fileno(stdin),&new); // gets something else?
-    cfmakeraw(&new); // makes new terminal settings
-    tcsetattr(fileno(stdin),TCSANOW,&new); // sets those settings immediately (TCSANOW) to &new
+    tcgetattr(fileno(stdin),&old); 
+    tcgetattr(fileno(stdin),&new); 
+    cfmakeraw(&new); 
+    tcsetattr(fileno(stdin),TCSANOW,&new); 
     fputs("Press any key to continue...",stdout);
     fflush(NULL);
     fgetc(stdin); 
-    tcsetattr(fileno(stdin),TCSANOW,&old); // goes back to old settings
-    puts(""); // newline
+    tcsetattr(fileno(stdin),TCSANOW,&old); 
+    puts(""); 
 }
 
-int CHOICE() {
+int choice() {
     char choice;
 
     do {
@@ -47,7 +47,7 @@ int CHOICE() {
     return EXIT_FAILURE;
 }
 
-int COUNT_LINES_IN_FILE (char filename[], uint64_t *lines) {
+int count_lines_in_file (char filename[], uint64_t *lines) {
 
     // Does not follow posix because this function accounts for if the last line does not end with a newline.
 
@@ -83,7 +83,7 @@ int COUNT_LINES_IN_FILE (char filename[], uint64_t *lines) {
     return 0;
 }
 
-int COUNT_LINES_IN_FILE_POSIX (char filename[], size_t *lines) {
+int count_lines_in_file_posix (char filename[], size_t *lines) {
 
     // Same function as before but posix
 
@@ -97,7 +97,7 @@ int COUNT_LINES_IN_FILE_POSIX (char filename[], size_t *lines) {
     }
 
     char buffer[BUF_SZ_4]; // Creates buffer with size of BUF_SZ_4
-    while (1) {
+while (1) { // hello!
         size_t bytes_read = fread(buffer, 1, BUF_SZ_4, file); // puts chars from file in to buffer and returns the amount of bytes.
         for (size_t i = 0 ; i < bytes_read; i++) { 
             if (buffer[i] == '\n') { // Searches through the buffer for newlines.
@@ -122,14 +122,14 @@ void shuffle(char arr[], int n) {
     }
 }
 
-int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Making this function was hell. Hardest thing ive coded in a while.
+int get_line(char filename[], long focus, char **line, size_t *start) { // Making this function was hell. Hardest thing ive coded in a while.
     
 
     FILE *file;
     file = fopen(filename,"r"); // Open file
 
     if (file == NULL) { // Check if you can open file
-        fprintf(stderr, "Cannot open file GET_LINE.\n");
+        fprintf(stderr, "Cannot open file get_line.\n");
         return 1;
     }
     
@@ -162,8 +162,7 @@ int GET_LINE(char filename[], long focus, char **line, size_t *start) { // Makin
         }
 
         *start = 0; // Is start the start of where line
-        
-        //printf("%s", c1buf); // The purpose of this if statement is that it will only print line 1. Not too elegant of a way to handle this but its the only way i knew how to.
+
     } else {
 
         focus--;

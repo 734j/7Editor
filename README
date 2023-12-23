@@ -1,6 +1,8 @@
 This is my take on a so called "Line editor"
 Its a crude and simple line editor.
 
+WARNING: Do not use this program on any files that you dont want to risk damaging, deleting or overwriting. I can not gaurantee that this program will function as expected.
+
 TODO:
 - Create a function to retrieve a line from file (DONE) It's called: GET_LINE(char filename[], long focus, char **line)
 - Create edit mode to actually make edits to the file (DONE)

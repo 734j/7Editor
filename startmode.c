@@ -6,13 +6,13 @@
 #include "7ed.h"
 #include <stdint.h>
 
-int NCAT(char filename[]) {
+int ncat(char filename[]) {
 
     FILE *file;
     file = fopen(filename,"r");
 
     if (file == NULL) {
-        fprintf(stderr, "Cannot open file. NCAT\n");
+        fprintf(stderr, "Cannot open file. ncat\n");
         return 1;
     }
 
@@ -28,7 +28,7 @@ int NCAT(char filename[]) {
 int startmode(char filename[]) {
 
     uint64_t Flines;
-    int returnval = COUNT_LINES_IN_FILE(filename, &Flines);
+    int returnval = count_lines_in_file(filename, &Flines);
     if (returnval == 1) {
         return EXIT_FAILURE;
     }
@@ -38,6 +38,12 @@ int startmode(char filename[]) {
 
     while(1) {
         firstwhile:
+
+        int ret = count_lines_in_file(filename, &Flines); // update Flines every time
+        if (ret == 1) {
+        return EXIT_FAILURE;
+        }
+
         fprintf(stdout, "(%lu): ", focus);
         char command = getchar();
         if (command == '\n') { 
@@ -98,7 +104,7 @@ int startmode(char filename[]) {
                 
                 char *line;
                 size_t start;
-                int ret = GET_LINE(filename, focus, &line, &start);
+                int ret = get_line(filename, focus, &line, &start);
                 if (ret == 1) {
                     return EXIT_FAILURE;
                 }
@@ -117,7 +123,7 @@ int startmode(char filename[]) {
             case 'c':
                 
                 uint64_t CFlines;
-                int returnval = COUNT_LINES_IN_FILE(filename, &CFlines);
+                int returnval = count_lines_in_file(filename, &CFlines);
                 if (returnval == 1) {
                     return EXIT_FAILURE;
                 }
@@ -130,7 +136,7 @@ int startmode(char filename[]) {
             break;
             case 'a':
             case 'A':
-                NCAT(filename);
+                ncat(filename);
             break;
             case 'n':
             case 'N': {
@@ -166,29 +172,41 @@ int startmode(char filename[]) {
                     }
 
                     } while (!success);
-                    NEW_LINE(filename, new_line_pos_temp);
+                    new_line(filename, new_line_pos_temp);
             break; }
             case 'X':
             case 'x':
-                /*
-                if (focus == Flines) {
-                    size_t Plines;
-                    int ret = COUNT_LINES_IN_FILE_POSIX(filename, &Plines);
-                    
-                    if (Flines != Plines) {
-                        NEW_LINE(filename);
-                    }
-                }
-                */
-                int choice = CHOICE();
-                if (choice == 0) {
+                
+                int choic = choice();
+                if (choic == 0) {
                     remove_line_contents(filename, focus);
                 } 
             break;
             case 'D':
-            case 'd':
-                fprintf(stdout, "delete\n");
-            break;
+            case 'd': {
+                int choic = choice();
+                if (choic == 1) {
+                    return 1;
+                }
+                int increment = 0;
+                if (focus == 1) { // if we are at line 1 then increment becomes 1
+                    increment++;
+                }
+                int rlc = remove_line_contents(filename, focus);
+                if (rlc == 1) {
+                    return 1;
+                }
+
+                int dsn = delete_specified_newline(filename, focus+increment);
+                if (dsn == 1) {
+                    return 1;
+                }
+                if (focus == 1) {
+                    break;
+                }
+                focus--;
+
+            break; }
             default:
                 fprintf(stdout, "?\n");
         }
