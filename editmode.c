@@ -242,7 +242,10 @@ int editmode(char filename[], long focus) { // the editing interface
         char editbuffer[BUF_SZ_2];
         fprintf(stdout, "(%ld EDIT): ", focus);
 
-        fgets(editbuffer, BUF_SZ_2, stdin);
+        char *fgs = fgets(editbuffer, BUF_SZ_2, stdin);
+	if (fgs == NULL) {
+	    return 0;
+	}
 
         if (editbuffer[0] == '\n') { 
             fprintf(stdout, "No changes\n");

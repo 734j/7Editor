@@ -28,22 +28,21 @@ int ncat(char filename[]) {
 int startmode(char filename[]) {
 
     uint64_t Flines;
-    int returnval = count_lines_in_file(filename, &Flines);
+    int returnval = count_lines_in_file(filename, &Flines); 
     if (returnval == 1) {
         return EXIT_FAILURE;
     }
     fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
     uint64_t focus = 1;
-
+    // This stuff before the while loop is to display the amount of lines upon starting the editor and also setting focus
     while(1) {
         firstwhile:
 
-        int ret = count_lines_in_file(filename, &Flines); // update Flines every time
-        if (ret == 1) {
-        return EXIT_FAILURE;
-        }
-
+        count_lines_in_file(filename, &Flines); // I do not know WHY i can not have this return to a variable??
+                                                // For some reason whenever i do int x = count_lines_in_file(.....) it will NOT compile
+                                                // I can not for the life of me figure out what the compiler is trying to say about the"expected expression" error
+                                                // I HAVE DONE THE SAME THING EVERYWHERE ELSE WHY WOULD IT INEXPLICABLY NOT WORK SPECIFICALLY HERE?
         fprintf(stdout, "(%lu): ", focus);
         char command = getchar();
         if (command == '\n') { 

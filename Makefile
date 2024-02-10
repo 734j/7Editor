@@ -1,11 +1,17 @@
+CC=clang
+CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2
+CFLAGS_TESTBIN=-Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
+TARGET=7ed
+TESTTARGET=7ed-TESTING
+
 all: 7ed
 7ed:
-	gcc -Wfatal-errors -Wall -Werror -Wextra -g -O3 7ed.c functions.c startmode.c editmode.c -o 7ed
+	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
 	
 clean:
-	rm -f 7ed
-	rm -f test/7ed-TESTING
+	rm -f $(TARGET)
+	rm -f test/$(TESTTARGET)
 
 tests:
-	gcc -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address 7ed.c functions.c startmode.c editmode.c -o test/7ed-TESTING
+	$(CC) $(CFLAGS_TESTBIN) 7ed.c functions.c startmode.c editmode.c -o test/$(TESTTARGET)
 	
