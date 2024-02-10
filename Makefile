@@ -1,5 +1,5 @@
-CC=clang
-CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2
+CC=gcc
+CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2 -static
 CFLAGS_TESTBIN=-Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
 TARGET=7ed
 TESTTARGET=7ed-TESTING
