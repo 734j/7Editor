@@ -41,10 +41,8 @@ int startmode(char filename[]) {
         int ret = count_lines_in_file(filename, &Flines); 
         if (ret == 1) {
             return EXIT_FAILURE;
-        }                                       // I do not know WHY i can not have this return to a variable??
-                                                // For some reason whenever i do int x = count_lines_in_file(.....) it will NOT compile
-                                                // I can not for the life of me figure out what the compiler is trying to say about the"expected expression" error
-                                                // I HAVE DONE THE SAME THING EVERYWHERE ELSE WHY WOULD IT INEXPLICABLY NOT WORK SPECIFICALLY HERE?
+        }                                    
+
         fprintf(stdout, "(%lu): ", focus);
         char command = getchar();
         if (command == '\n') { 
@@ -217,11 +215,13 @@ int startmode(char filename[]) {
             break; }
             default:
                 fprintf(stdout, "?\n");
+        
         }
 
 
-
+    
     }
+
     
     return EXIT_SUCCESS;
 }

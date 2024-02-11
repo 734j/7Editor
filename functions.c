@@ -6,20 +6,6 @@
 #include <string.h>
 #include <stdint.h>
 
-void confirm() {
-    struct termios old,new;
-
-    tcgetattr(fileno(stdin),&old); 
-    tcgetattr(fileno(stdin),&new); 
-    cfmakeraw(&new); 
-    tcsetattr(fileno(stdin),TCSANOW,&new); 
-    fputs("Press any key to continue...",stdout);
-    fflush(NULL);
-    fgetc(stdin); 
-    tcsetattr(fileno(stdin),TCSANOW,&old); 
-    puts(""); 
-}
-
 int choice() {
     char choice;
 
@@ -56,7 +42,7 @@ int count_lines_in_file (char filename[], uint64_t *lines) {
     file = fopen(filename,"rb"); // Open file
 
     if (file == NULL) { // Check if you can open file
-        fprintf(stderr, "Cannot open file. COUNT_LINES_IN_FILE\n");
+        fprintf(stderr, "count_lines_in_file(): Cannot open file.\n");
         return 1;
     }
     fseek(file, -1, SEEK_END);

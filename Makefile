@@ -1,9 +1,10 @@
-CC=gcc #gcc works best here, mostly because i experienced errors in clang that i dont care to deal with quite yet.
+CC=cc
 CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2 -static
 CFLAGS_TESTBIN=-Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
 TARGET=7ed
 TESTTARGET=7ed-TESTING
 INSTALL_DIRECTORY=/usr/local/bin
+
 
 all: 7ed
 7ed:
@@ -18,6 +19,6 @@ tests:
 	$(CC) $(CFLAGS_TESTBIN) 7ed.c functions.c startmode.c editmode.c -o test/$(TESTTARGET)
 
 install:
-	cp $(TARGET) $(INSTALL_DIRECTORY)
+	@cp $(TARGET) $(INSTALL_DIRECTORY)
 	@echo "$(TARGET) was installed to $(INSTALL_DIRECTORY)"
 
