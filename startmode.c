@@ -146,39 +146,9 @@ int startmode(char filename[]) {
             break;
             case 'n':
             case 'N': {
-                 // The "focus" that the newline will be inserted afterwards
-                uint64_t new_line_pos_temp = 0; // temp
-                char buf[1024];
-                int success;
+                
+                    new_line(filename, focus); // create new line after the current focus
 
-                do {
-                    fprintf(stdout, "Create a new line after: ");
-                    if (!fgets(buf, 1024, stdin)) {    // take input from user
-                        fprintf(stderr, "Too many characters\n");
-                        break;
-                    }
-                    char *endptr;
-
-                    new_line_pos_temp = strtol(buf, &endptr, 10);
-                    errno = 0;
-                    if (errno == ERANGE) {
-                        fprintf(stderr, "Sorry, this number is too small or too large.\n");
-                        success = 0;
-                    }
-                    else if (endptr == buf) {
-                        // no character was read
-                        success = 0;
-                    }
-                    else if (*endptr && *endptr != '\n') {
-                        success = 0;
-                    }
-
-                    else {
-                        success = 1;
-                    }
-
-                    } while (!success);
-                    new_line(filename, new_line_pos_temp);
             break; }
             case 'X':
             case 'x':

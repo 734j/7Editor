@@ -1,8 +1,10 @@
+MAKEFLAGS += -s
+
 all: 7ed-TESTING
 7ed-TESTING:
 	cd .. && make tests
-	@echo "Done."
+	echo "Done."
 
 clean: 
 	cd .. && make clean
-	@echo "Cleaned."
+	echo "Cleaned."
