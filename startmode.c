@@ -26,7 +26,7 @@ int ncat(char filename[]) {
 }
 
 int startmode(char filename[]) {
-
+    // The entry to the program. Count lines and display the count. Also show which file is being edited.
     uint64_t Flines;
     int returnval = count_lines_in_file(filename, &Flines); 
     if (returnval == 1) {
@@ -34,9 +34,8 @@ int startmode(char filename[]) {
     }
     fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
-    uint64_t focus = 1;
-    // This stuff before the while loop is to display the amount of lines upon starting the editor and also setting focus
-    while(1) {
+    uint64_t focus = 1; // The focus variable. Which is the actual line number we have "selected"
+    while(1) { // The main loop to get the "UI" started
         firstwhile:
 
         int ret = count_lines_in_file(filename, &Flines); 
@@ -53,9 +52,9 @@ int startmode(char filename[]) {
         }
         while ('\n' != getchar());
         
-        switch (command) {
+        switch (command) { 
             case 'L':
-            case 'l':
+            case 'l': // L is how we change out "focus"
                 uint64_t Lfocus = 0;
                 char buf[1024];
                 int success;
@@ -67,7 +66,7 @@ int startmode(char filename[]) {
                         break;
                     }
                     if (buf[0] == '\n') {
-                        goto firstwhile; // start the first while loop aka startmode
+                        goto firstwhile; // If the user presses enter then we just goto start of the main loop
                     }
 
                     char *endptr;
