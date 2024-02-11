@@ -1,4 +1,4 @@
-CC=gcc
+CC=gcc #gcc works best here, mostly because i experienced errors in clang that i dont care to deal with quite yet.
 CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2 -static
 CFLAGS_TESTBIN=-Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
 TARGET=7ed

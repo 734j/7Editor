@@ -68,6 +68,14 @@ int startmode(char filename[]) {
                     if (buf[0] == '\n') {
                         goto firstwhile; // If the user presses enter then we just goto start of the main loop
                     }
+                    if (buf[0] == '+') { // if user inputs + then increment by 1
+                        Lfocus = focus+1;
+                        break;
+                    }
+                    if (buf[0] == '-') { // If user inputs - then decrement by 1
+                        Lfocus = focus-1;
+                        break;
+                    }
 
                     char *endptr;
 
