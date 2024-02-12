@@ -8,3 +8,7 @@ all: 7ed-TESTING
 clean: 
 	cd .. && make clean
 	echo "Cleaned."
+
+smode:
+	echo "CC input.c ---> smode"
+	cd .. && gcc -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address input.c -o test/smode
