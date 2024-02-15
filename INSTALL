@@ -1,0 +1,14 @@
+To compile this program just type 'make'.
+
+And then to install it you will have to 'make install' as root.
+
+- You may change the installation directory in the Makefile if you wish to,
+just change the INSTALL_DIRECTORY variable to wherever you want to install it.
+
+- The program will be compiled with the -static flag by default but you may remove it if you wish,
+just change the CFLAGS variable.
+
+If you encounter problems compiling you may have to do changes in the source code.
+I encountered some problems compiling on MacOS so i had to modify alot of format specifiers.
+I have not been able to compile with clang because the errors that i get are not very clear to me.
+gcc should work fine though. 
