@@ -1,0 +1,16 @@
+Positive:
+L		expected result: L only
+L+		expected result: L+ only
+L+4		expected result: +++ Valid
+L+34		expected result: +++ Valid
+L+4467		expected result: +++ Valid
+L24		expected result: Valid
+L34553		expected result: Valid
+
+Negative:
+LL		expected result: Invalid
+L0		expected result: Invalid
+L+0		expected result: Invalid
+L+l		expected result: Invalid
+L+35l		expected result: Invalid
+L23l		expected result: Invalid

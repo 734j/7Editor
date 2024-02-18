@@ -40,6 +40,8 @@ int smode_input_and_validator(char *single, char **multiple, uint64_t focus) { /
             
             path 3: If there is nothing else after the L (in this case just an L) then just return an L (DONE)
             */
+
+            // its already a clusterf##k of a function
             char nums[] = "123456789";
             int L_num_flag = 2;
             int plus_num_flag = -1; //If true the if statement will validate if input is valid after the +
@@ -47,9 +49,14 @@ int smode_input_and_validator(char *single, char **multiple, uint64_t focus) { /
 
             if (smode_buf[1] == '+') {
                 printf("Its a plus!\n");
+                plus_num_flag = 1;
                 // Check if its a plus
                 if (smode_buf[2] == '0') {
                     L_num_flag = -1; // if 0 then its just invalid immediately
+                }
+                if (smode_buf[2] != '\n') { // If there is no return we set these flags to false. 
+                    plus_num_flag = -1;     // If there is a return then no flags are changed and thus we know that the input is only an L+
+                    L_num_flag = -1;
                 }
 
                 for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
@@ -144,18 +151,26 @@ int smode_input_and_validator(char *single, char **multiple, uint64_t focus) { /
             if (L_num_flag == 0) {
                 printf("Because the string was valid we return it here!\n");
                 // actually return the valid string here
+                break;
             } 
             if (L_num_flag == -1) {
                 printf("Because the string was invalid we return '?' here!\n");
                 // invalid! return '?'
+                break;
             }
 
+            if (plus_num_flag == 1) {
+                printf("L+ only!");
+                break;
+            }
 
             if (smode_buf[1] == '\n') {
                 printf("L only!\n");
                 // just return L
+                break;
             }
 
+            printf("Because the string was invalid we return '?' here!\n"); // Last catch, it it makes it to here then just invalid
             // if it gets to here then i guess we just return '?'
             
 
