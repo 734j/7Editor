@@ -196,6 +196,18 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
         break;
         case 'n':
         case 'N':
+            // N will work similarly to L
+            /*
+            Just N will create a new line after the focus line
+            N+ Will do nothing
+            N+10 Will create 10 lines after the focus line
+            N-10 Will create 10 lines before the focus line (This one's a bit ambitious becasue it might need some extra work)
+            N10 Will create a line after line 10
+            N0 Will create a line "before" 1
+
+            If focus is 1 and we say N-10 Then it will create 10 lines "before" 1
+            */
+
             return _MULTIPLE;
         break;
         case 'x':
