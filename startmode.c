@@ -35,6 +35,7 @@ int startmode(char filename[]) {
     fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
     uint64_t focus = 1; // The focus variable. Which is the actual line number we have "selected"
+
     while(1) { // The main loop to get the "UI" started
         firstwhile:
 
@@ -48,6 +49,7 @@ int startmode(char filename[]) {
         if (command == '\n') { 
             continue; 
         }
+
         while ('\n' != getchar());
         
         switch (command) { 
