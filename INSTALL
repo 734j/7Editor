@@ -11,4 +11,4 @@ just change the CFLAGS variable.
 If you encounter problems compiling you may have to do changes in the source code.
 I encountered some problems compiling on MacOS so i had to modify alot of format specifiers.
 I have not been able to compile with clang because the errors that i get are not very clear to me.
-gcc should work fine though. 
+GCC should work fine though.
