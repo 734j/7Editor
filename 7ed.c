@@ -8,9 +8,29 @@
 
 #define VERSION 1
 #define USAGE "7ed [OPTION] [FILENAME]\n" \
-              "\nVALID OPTIONS:\n\n"\
+              "\nVALID COMMAND-LINE OPTIONS:\n\n"\
               "    -v   Prints out the version number\n"\
-              "    -i   Input file\n"
+              "    -i   Input file\n\n"\
+              "To use the text editor you need to enter appropriate commands.\n"\
+              "The prompt will display the current 'Focus' which is the line number\n"\
+              "that you are currently focused on. So for example the prompt can look like this:\n"\
+              "\n"\
+              "(1): \n"\
+              " \n"\
+              "The '1' is the line number that you are on and after the ':' is where you can\n"\
+              "enter commands.\n"\
+              "\n"\
+              "VALID COMMANDS:\n\n"\
+              "    L   Opens a new prompt asking for the line number you want to change 'focus' to\n"\
+              "    C   Prints out the filename and the amount of lines in the file to stdout\n"\
+              "    P   Prints out the current line that is in 'focus'\n"\
+              "    A   Prints out the entire file contents to stdout\n"\
+              "    Q   Quit the program\n"\
+              "    E   Enter 'edit mode' on the current line in 'focus'\n"\
+              "    N   Create a newline on the line after focus\n"\
+              "    X   Remove all contents of a line except the newline itself\n"\
+              "    D   Remove all contents of a line including the newline itself\n"\
+
 
 #define PROGRAM_NAME "7ed"
 
