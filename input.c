@@ -164,11 +164,9 @@ int validate_N(char *smode_buf) {
 
     if (smode_buf[1] == '+' || smode_buf[1] == '-') {
         if (smode_buf[2] == '0') {
-            printf("smode_buf[2] == 0 (_INVALID)\n");
             return _INVALID;
         }
         if (smode_buf[2] == '\n') { // If its only N+ or N- then invalid
-            printf("smode_buf[2] == \\n (_INVALID)\n");
             return _INVALID;
         }
 
