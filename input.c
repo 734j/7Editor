@@ -6,6 +6,7 @@
 #include "7ed.h"
 #include <stdint.h>
 
+#define _ONE 1
 #define _SINGLE 1
 #define _MULTIPLE 2 
 #define _FAIL '?' // final return value from smode_input to indicate an invalid
@@ -38,34 +39,31 @@ int validate_L(char *smode_buf) {
 
     char nums[] = "123456789";
     int L_num_flag = 2;
-    int plus_num_flag = -1; //If true the if statement will validate if input is valid after the +
-    int num_flag = -1; // If true the if statement will validate if input is valid after L
+    int plus_num_flag = _INVALID; //If true the if statement will validate if input is valid after the +
+    int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
 
     if (smode_buf[1] == '+' || smode_buf[1] == '-') {
-        //printf("Its a plus!\n");
-        plus_num_flag = 1;
-        // Check if its a plus
+        plus_num_flag = _ONE;
         if (smode_buf[2] == '0') {
-            L_num_flag = -1; // if 0 then its just invalid immediately
+            L_num_flag = _INVALID; // if 0 then its just invalid immediately
         }
         if (smode_buf[2] != '\n') { // If there is no return we set these flags to false. 
-            plus_num_flag = -1;     // If there is a return then no flags are changed and thus we know that the input is only an L+
-            L_num_flag = -1;
+            plus_num_flag = _INVALID;     // If there is a return then no flags are changed and thus we know that the input is only an L+
+            L_num_flag = _INVALID;
         }
 
         for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
             if (smode_buf[2] == nums[i]) {
-                //printf("Its a number after + \n");
-                plus_num_flag = 0;
+                plus_num_flag = _VALID;
                 break;
             }
         }
     }
 
 
-    if (plus_num_flag == 0) {
-        int plus_valid_flag = -1;
-        L_num_flag = -1; // False
+    if (plus_num_flag == _VALID) {
+        int plus_valid_flag = _INVALID;
+        L_num_flag = _INVALID; // False
         char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
         for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
@@ -74,19 +72,15 @@ int validate_L(char *smode_buf) {
 
                 if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
                     if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
-                        L_num_flag = 0;
-                        plus_valid_flag = 0;
-                        //printf(" +++ String is valid!\n");
-                        // success! return the "valid" string. (example: L44)
-                        // Do something to indicate that its successful and break out somehow not sure yet
+                        L_num_flag = _VALID;
+                        plus_valid_flag = _VALID;
                         break;
                     }
                     break;
                 }
 
             } //inner nested loop
-            if (plus_valid_flag == 0) {
-                //printf(" +++ Validflag!\n");
+            if (plus_valid_flag == _VALID) {
                 break;
             }
             
@@ -95,20 +89,19 @@ int validate_L(char *smode_buf) {
     }
 
     if (smode_buf[1] == '0') { // [1] because there is no + at 1. Number starts immediately after L
-        L_num_flag = -1; // if 0 then its just invalid immediately
+        L_num_flag = _INVALID; // if 0 then its just invalid immediately
     }
 
     for (int i = 0 ; i < 9 ; i++) { // Check if it starts with a number
         if (smode_buf[1] == nums[i]) {
-            //printf("Its a number!\n");
-            num_flag = 0;
+            num_flag = _VALID;
             break;
         }
     }
     
     if (num_flag == 0) { // Start validating if there are numbers after L
-        int valid_flag = -1;
-        L_num_flag = -1; // False
+        int valid_flag = _INVALID;
+        L_num_flag = _INVALID; // False
         char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
         for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
@@ -117,59 +110,43 @@ int validate_L(char *smode_buf) {
 
                 if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
                     if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
-
-                        // 0 1 2 3
-                        // L 2 5 8
-                        L_num_flag = 0;
-                        valid_flag = 0;
-                        //printf("Success! String is valid!\n");
-                        // success! return the "valid" string. (example: L44)
-                        // Do something to indicate that its successful and break out somehow not sure yet
+                        L_num_flag = _VALID;
+                        valid_flag = _VALID;
+                    
                         break;
                     }
                     break;
                 }
 
             } //inner nested loop
-            if (valid_flag == 0) {
-                //printf("Validflag!\n");
+            if (valid_flag == _VALID) {
                 break;
             }
             
 
         }//outer nested loop
     }// num_flag if-statement
-    if (L_num_flag == 0) {
-        //printf("Because the string was valid we return it here!\n");
-        // actually return the valid string here
+    if (L_num_flag == _VALID) {
         return _VALID;
     } 
-    if (L_num_flag == -1) {
-        //printf("Because the string was invalid we return '?' here!\n");
-        // invalid! return '?'
+    if (L_num_flag == _INVALID) {
         return _INVALID;
     }
 
-    if (plus_num_flag == 1) {
-        //printf("L+ only!");
+    if (plus_num_flag == _ONE) {
         return _VALID;
     }
 
     if (smode_buf[1] == '\n') {
-        //printf("L only!\n");
-        // just return L
         return _VALID;
     }
 
-    //printf("Because the string was invalid we return '?' here!\n"); // Last catch, if it makes it to here then just invalid
     return _INVALID;
     
 }
 
 int validate_N(char *smode_buf) {
-    // N will work similarly to L
-    /*
-
+    /* N will work very similarly to L.
     When i mark as (DONE) i don't actually mean the full feature, i mean the input validation for that specific feature to be done.
     Just N will create a new line after the focus line (DONE)
     N+ or N- Will do nothing (AKA invalid) (DONE)
@@ -183,12 +160,9 @@ int validate_N(char *smode_buf) {
     char nums[] = "123456789";
     int N_num_flag = _INVALID;
     int plus_num_flag = _INVALID; //If true the if statement will validate if input is valid after the +
-    //int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
+    int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
 
     if (smode_buf[1] == '+' || smode_buf[1] == '-') {
-        //printf("Its a plus!\n");
-        plus_num_flag = 1;
-        // Check if its a plus
         if (smode_buf[2] == '0') {
             printf("smode_buf[2] == 0 (_INVALID)\n");
             return _INVALID;
@@ -201,15 +175,15 @@ int validate_N(char *smode_buf) {
         for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
             if (smode_buf[2] == nums[i]) {
                 //printf("Its a number after + \n");
-                plus_num_flag = 0;
+                plus_num_flag = _VALID;
                 break;
             }
         }
     }
 
     if (plus_num_flag == 0) { // Because there is a number after + or - then the flag is 0 and this code runs
-        int plus_valid_flag = -1;
-        N_num_flag = -1; // False
+        int plus_valid_flag = _INVALID;
+        N_num_flag = _INVALID; // False
         char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
         for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
@@ -236,26 +210,59 @@ int validate_N(char *smode_buf) {
     }
 
     // We aren't checking for N_num_flag yet because i haven't gotten that far in the code
+    if (smode_buf[1] == '0') { // [1] because there is no + at 1. Number starts immediately after L
+        N_num_flag = _INVALID; // if 0 then its just invalid immediately
+    }
+
+    for (int i = 0 ; i < 9 ; i++) { // Check if it starts with a number
+        if (smode_buf[1] == nums[i]) {
+            //printf("Its a number!\n");
+            num_flag = _VALID;
+            break;
+        }
+    }
+    
+    if (num_flag == 0) { // Start validating if there are numbers after L
+        int valid_flag = _INVALID;
+        N_num_flag = _INVALID; // False
+        char nums_with_zero[] = "0123456789";
+        // Check the rest with a loop. Start at 2
+        for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
+                                                // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
+            for (int j = 0 ; j < 10 ; j++) {
+
+                if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
+                    if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
+
+                        N_num_flag = _VALID;
+                        valid_flag = _VALID;
+                        break;
+                    }
+                    break;
+                }
+
+            } //inner nested loop
+            if (valid_flag == _VALID) {
+                //printf("Validflag!\n");
+                break;
+            }
+            
+
+        }//outer nested loop
+    }
 
     if (smode_buf[1] == '\n') {
-        printf("N only!\n");
-        // just return N
-        return _VALID;
+        return _VALID; // just return N
     }
 
     if (N_num_flag == _VALID) {
-        printf("Because the string was valid we return it here!\n");
-        // actually return the valid string here
-        return _VALID;
+        return _VALID; // actually return the valid string here
     } 
     if (N_num_flag == _INVALID) {
-        printf("Because the string was invalid we return '?' here!\n");
-        // invalid! return '?'
-        return _INVALID;
+        return _INVALID; // invalid! return '?'
     }
 
     if (plus_num_flag == _VALID) {
-        printf("plus_num_flag == _VALID");
         return _VALID;
     }
 
@@ -282,7 +289,7 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
             if (chk == _INVALID) {
                 return _FAIL;
             }
-            *multiple = (char *)malloc(strlen(smode_buf) + 1); // just a test
+            *multiple = (char *)malloc(strlen(smode_buf) + 1);
             strcpy(*multiple, smode_buf);
             return _MULTIPLE;
 
@@ -294,6 +301,8 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
             if (chk == _INVALID) {
                 return _FAIL;
             }
+            *multiple = (char *)malloc(strlen(smode_buf) + 1);
+            strcpy(*multiple, smode_buf);
             return _MULTIPLE;
         break; }
         case 'x':
@@ -334,8 +343,7 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
         break;
 
     }
-    
-    // invalid inputs
+
     return _FAIL;
 
 }
@@ -361,8 +369,8 @@ int main () {
     char *multiple;
     char single;
     uint64_t focus = 1;
-    smode_input(&single, &multiple, focus);
-    /*
+    int si_ret = smode_input(&single, &multiple, focus);
+    
     if (si_ret == _SINGLE) {
         fprintf(stdout, "single\n");
         fprintf(stdout, "%c", single);
@@ -374,8 +382,6 @@ int main () {
     }
     if (si_ret == _FAIL) {
         fprintf(stdout, "?\n");
-    } */
-    //fprintf(stdout, "%s\n", multiple);
-    //free(multiple);
+    }
 
 }
