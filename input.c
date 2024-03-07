@@ -4,21 +4,12 @@
 #include <string.h>
 #include <errno.h>
 #include "7ed.h"
+#include "input.h"
 #include <stdint.h>
 
-#define _ONE 1
-#define _SINGLE 1
-#define _MULTIPLE 2 
-#define _FAIL '?' // final return value from smode_input to indicate an invalid
-#define _VALID 0 // this may only be used to mark as valid or invalid from the validate functions
-#define _INVALID -1 // this may only be used to mark as valid or invalid from the validate functions
-                    // _FAIL and _INVALID are sorta tied to eachother
 
 // This will be the new input system for combining commands with line numbers
 // Work in progress and far from finished. This is not included when compiling normally.
-
-#define SMODE_MAX_SIZE 33
-#define SMODE_MAX_INPUT_SIZE 32
 
 int validate_L(char *smode_buf) {
 

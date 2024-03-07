@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define BUF_SZ_256 256
 #define BUF_SZ_512 512
@@ -7,6 +8,9 @@
 #define BUF_SZ_2 2048
 #define BUF_SZ_4 4096
 #define BUF_SZ_8 8192
+
+#define TRUE_7ED 0
+#define FALSE_7ED 1
 
 int count_lines_in_file(char filename[], uint64_t *lines);
 

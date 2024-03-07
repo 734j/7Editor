@@ -30,7 +30,7 @@ int startmode(char filename[]) {
     uint64_t Flines;
     int returnval = count_lines_in_file(filename, &Flines); 
     if (returnval == 1) {
-        return EXIT_FAILURE;
+        return 1;
     }
     fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
