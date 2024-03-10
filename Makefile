@@ -12,6 +12,8 @@ clean:
 	rm -f $(TARGET)
 	echo "rm -f test/$(TESTTARGET)"
 	rm -f test/$(TESTTARGET)
+	echo "rm -f test/smode"
+	rm -f test/smode
 
 tests:
 	echo "CC 7ed.c functions.c startmode.c editmode.c ---> test/$(TESTTARGET)"
