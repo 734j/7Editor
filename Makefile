@@ -1,18 +1,12 @@
 CC=gcc
-CFLAGS=-Wfatal-errors -Wall -Werror -Wextra -g -O2 -static
 CFLAGS_TESTBIN=-Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
-CFLAGS_RELEASE=-O2 -flto -march=native -DNDEBUG -fomit-frame-pointer -s -static
+CFLAGS=-O2 -flto -march=native -DNDEBUG -fomit-frame-pointer -s -static
 TARGET=7ed
 TESTTARGET=7ed-TESTING
 INSTALL_DIRECTORY=/usr/local/bin
 MAKEFLAGS += -s
 
-all: 7ed
-7ed:
-	echo "CC 7ed.c functions.c startmode.c editmode.c ---> $(TARGET)"
-	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
-	echo "$(TARGET) is done. Run 'make install' as root to install it"
-	
+all: release
 clean:
 	echo "rm -f $(TARGET)"
 	rm -f $(TARGET)
@@ -29,5 +23,5 @@ install:
 
 release:
 	echo "CC 7ed.c functions.c startmode.c editmode.c ---> $(TARGET)"
-	$(CC) $(CFLAGS_RELEASE) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
+	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
 	echo "$(TARGET) is done."
