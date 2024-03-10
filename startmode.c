@@ -164,7 +164,7 @@ int startmode(char filename[]) {
             case 'd': {
                 int choic = choice();
                 if (choic == 1) {
-                    return 1;
+                    break;
                 }
                 int increment = 0;
                 if (focus == 1) { // checks if its line 1. This is so that we can remove the newline properly.
