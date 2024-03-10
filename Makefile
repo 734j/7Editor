@@ -8,7 +8,7 @@ INSTALL_DIRECTORY=/usr/local/bin
 MAKEFLAGS += -s
 
 all: 7ed
-default:
+7ed:
 	echo "CC 7ed.c functions.c startmode.c editmode.c ---> $(TARGET)"
 	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
 	echo "$(TARGET) is done. Run 'make install' as root to install it"
@@ -27,7 +27,7 @@ install:
 	cp $(TARGET) $(INSTALL_DIRECTORY)
 	echo "$(TARGET) was installed to $(INSTALL_DIRECTORY)"
 
-7ed:
+release:
 	echo "CC 7ed.c functions.c startmode.c editmode.c ---> $(TARGET)"
 	$(CC) $(CFLAGS_RELEASE) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
 	echo "$(TARGET) is done."
