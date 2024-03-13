@@ -57,10 +57,9 @@ int validate_L(char *smode_buf) {
         L_num_flag = _INVALID; // False
         char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
-        for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
+        for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                                 // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
             for (int j = 0 ; j < 10 ; j++) {
-
                 if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
                     if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
                         L_num_flag = _VALID;
@@ -68,6 +67,9 @@ int validate_L(char *smode_buf) {
                         break;
                     }
                     break;
+                }
+                if(smode_buf[i+1] != nums_with_zero[j]) {
+                    return _INVALID;
                 }
 
             } //inner nested loop
@@ -93,23 +95,34 @@ int validate_L(char *smode_buf) {
     if (num_flag == 0) { // Start validating if there are numbers after L
         int valid_flag = _INVALID;
         L_num_flag = _INVALID; // False
+        int Kflag; 
         char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
         for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                                 // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
             for (int j = 0 ; j < 10 ; j++) {
-
-                if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
-                    if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
-                        L_num_flag = _VALID;
-                        valid_flag = _VALID;
+                if(smode_buf[i] == nums_with_zero[j]) {//check if there is a number, if there is then next check
+                    if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') { // if there was a number then check if theres a newline
+                        L_num_flag = _VALID;                                // if we had a newline then check the flags as valid and break out.
+                        valid_flag = _VALID;                                // it will break out here and then an if statement check will also check it again so that it can break out of the outer loop
                     
                         break;
                     }
+                    Kflag = _INVALID;
+                    for (int k = 0 ; k < 10 ; k++) {
+                        if (smode_buf[i+1] == nums_with_zero[k]) { // We checked for newline earlier but since we didnt fine one
+                            Kflag = _VALID;                         // We check if theres a number. If theres a number then keep going
+                            break;                                  // If there is anything but a number then Return _INVALID
+                        }
+                    }
+                    if (Kflag == _INVALID) {
+                        return _INVALID;
+                    }
+
                     break;
                 }
-
             } //inner nested loop
+
             if (valid_flag == _VALID) {
                 break;
             }
@@ -139,25 +152,34 @@ int validate_L(char *smode_buf) {
 int validate_N(char *smode_buf) {
     /* N will work very similarly to L.
     When i mark as (DONE) i don't actually mean the full feature, i mean the input validation for that specific feature to be done.
-    Just N will create a new line after the focus line (DONE)
-    N+ or N- Will do nothing (AKA invalid) (DONE)
+    
+    Just N will create a new line after the focus line (DONE) 
+    N+ will do the same (DONE)
+    N+1 will do the same (DONE)
+    In short: N = N+ = N+1 (They will all create 1 line after the focus line)
+
+    N+2 Will create 2 lines after focus line. (DONE)
     N+10 Will create 10 lines after the focus line (DONE)
-    N-10 Will create 10 lines before the focus line (This one's a bit ambitious becasue it might need some extra work) (DONE)
     N10 Will create a line after line 10 (NOT DONE)
-    N0 Will create a line "before" 1 (Not gonna do)
+    
+    N- will work a bit differently. Since N+, N+1, N work the same N wont be available for making lines in the opposite direction.
+    I am not even sure if i want '-' to be a valid input. Or how ill even do it. For now i will make all '-'/negatives ivalid. 
 
     If focus is 1 and we say N-10 Then it will create 10 lines "before" 1 (out of scope for validate_N)
+
+    TODO:
+        - Make N+ valid again
+        - Make all '-'/negatives invalid. 
+        
     */
     char nums[] = "123456789";
     int N_num_flag = _INVALID;
     int plus_num_flag = _INVALID; //If true the if statement will validate if input is valid after the +
     int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
 
-    if (smode_buf[1] == '+' || smode_buf[1] == '-') {
+    if (smode_buf[1] == '+') {
+        plus_num_flag = _ONE;
         if (smode_buf[2] == '0') {
-            return _INVALID;
-        }
-        if (smode_buf[2] == '\n') { // If its only N+ or N- then invalid
             return _INVALID;
         }
 
@@ -170,7 +192,7 @@ int validate_N(char *smode_buf) {
         }
     }
 
-    if (plus_num_flag == 0) { // Because there is a number after + or - then the flag is 0 and this code runs
+    if (plus_num_flag == _VALID) { // Because there is a number after + or - then the flag is 0 and this code runs
         int plus_valid_flag = _INVALID;
         N_num_flag = _INVALID; // False
         char nums_with_zero[] = "0123456789";
@@ -243,16 +265,15 @@ int validate_N(char *smode_buf) {
     if (smode_buf[1] == '\n') {
         return _VALID; // just return N
     }
+    if (plus_num_flag == _ONE) {
+        return _VALID;
+    }
 
     if (N_num_flag == _VALID) {
         return _VALID; // actually return the valid string here
     } 
     if (N_num_flag == _INVALID) {
         return _INVALID; // invalid! return '?'
-    }
-
-    if (plus_num_flag == _VALID) {
-        return _VALID;
     }
 
     return _INVALID;
