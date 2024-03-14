@@ -24,3 +24,8 @@ L+023L		expected result: Invalid
 L23l		expected result: Invalid
 L-012		expected result: Invalid
 L-0L		expected result: Invalid
+L100+100	expected result: Invalid
+L+100+100	expected result: Invalid
+N100+100	expected result: Invalid
+N+100+100	expected result: Invalid
+

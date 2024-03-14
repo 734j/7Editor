@@ -167,26 +167,25 @@ int validate_N(char *smode_buf) {
 
     If focus is 1 and we say N-10 Then it will create 10 lines "before" 1 (out of scope for validate_N)
 
-    TODO:
-        - Make N+ valid again
-        - Make all '-'/negatives invalid. 
-        
     */
+    char nums_with_zero[] = "0123456789";
     char nums[] = "123456789";
     int N_num_flag = _INVALID;
     int plus_num_flag = _INVALID; //If true the if statement will validate if input is valid after the +
     int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
-
     if (smode_buf[1] == '+') {
         plus_num_flag = _ONE;
         if (smode_buf[2] == '0') {
             return _INVALID;
         }
 
+        if (!((smode_buf[2] >= '0' && smode_buf[2] <= '9') || smode_buf[2] == '\n')) {
+            return _INVALID;
+        }
+
         for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
-            if (smode_buf[2] == nums[i]) {
-                //printf("Its a number after + \n");
-                plus_num_flag = _VALID;
+            if (smode_buf[2] == nums[i]) {    
+                plus_num_flag = _VALID;                 
                 break;
             }
         }
@@ -195,9 +194,8 @@ int validate_N(char *smode_buf) {
     if (plus_num_flag == _VALID) { // Because there is a number after + or - then the flag is 0 and this code runs
         int plus_valid_flag = _INVALID;
         N_num_flag = _INVALID; // False
-        char nums_with_zero[] = "0123456789";
         // Check the rest with a loop. Start at 2
-        for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
+        for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                                 // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
             for (int j = 0 ; j < 10 ; j++) {
 
@@ -209,6 +207,9 @@ int validate_N(char *smode_buf) {
                         break;
                     }
                     break;
+                }
+                if(smode_buf[i+1] != nums_with_zero[j]) {
+                    return _INVALID;
                 }
 
             } //inner nested loop
@@ -233,10 +234,10 @@ int validate_N(char *smode_buf) {
         }
     }
     
-    if (num_flag == 0) { // Start validating if there are numbers after L
+    if (num_flag == 0) { // Start validating if there are numbers after N
         int valid_flag = _INVALID;
         N_num_flag = _INVALID; // False
-        char nums_with_zero[] = "0123456789";
+        int Kflag = _INVALID;
         // Check the rest with a loop. Start at 2
         for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                                 // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
@@ -249,6 +250,16 @@ int validate_N(char *smode_buf) {
                         valid_flag = _VALID;
                         break;
                     }
+                    Kflag = _INVALID;
+                    for (int k = 0 ; k < 10 ; k++) {
+                        if (smode_buf[i+1] == nums_with_zero[k]) { // We checked for newline earlier but since we didnt fine one
+                            Kflag = _VALID;                         // We check if theres a number. If theres a number then keep going
+                            break;                                  // If there is anything but a number then Return _INVALID
+                        }
+                    }
+                    if (Kflag == _INVALID) {
+                        return _INVALID;
+                    }
                     break;
                 }
 
@@ -258,13 +269,13 @@ int validate_N(char *smode_buf) {
                 break;
             }
             
-
         }//outer nested loop
     }
 
     if (smode_buf[1] == '\n') {
         return _VALID; // just return N
     }
+    
     if (plus_num_flag == _ONE) {
         return _VALID;
     }
