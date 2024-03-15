@@ -6,6 +6,8 @@
 #include "input.h"
 #include <stdint.h>
 
+// Hej hej!!
+
 #define VERSION 1
 #define USAGE "7ed [OPTION] [FILENAME]\n" \
               "\nVALID COMMAND-LINE OPTIONS:\n\n"\
