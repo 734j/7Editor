@@ -14,6 +14,8 @@
 #define _CONTINUE 6
 #define _NA 7
 
+int validate_plus_continue(char *smode_buf);
+
 int validate_L(char *smode_buf);
 
 int validate_N(char *smode_buf);
