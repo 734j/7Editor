@@ -11,4 +11,4 @@ clean:
 
 smode:
 	echo "CC input.c ---> smode"
-	cd .. && gcc -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address input.c -o test/smode
+	cd .. && gcc -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address input.c i_validation.c -o test/smode

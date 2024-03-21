@@ -1,4 +1,4 @@
-To compile this program just type 'make release' or 'make'.
+To compile this program just type 'make release' or 'make'
 
 And then to install it you will have to 'make install' as root.
 
