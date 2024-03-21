@@ -64,31 +64,26 @@ _IMM_NUMBER (number immediately after L or N or whatever)
 
 int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE then run this to further validate
 
-    int plus_valid_flag = _INVALID;
-    L_num_flag = _INVALID; // False
     char nums_with_zero[] = "0123456789";
-    // Check the rest with a loop. Start at 2
+    //Start at 2
     for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                             // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
-        for (int j = 0 ; j < 10 ; j++) {
-            if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
-                if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
-                    L_num_flag = _VALID;
-                    plus_valid_flag = _VALID;
-                    break;
-                }
-                break;
-            }
-            if(smode_buf[i+1] != nums_with_zero[j]) {
+        for (int k = 0 ; k < 10 ; k++) {
+            if(smode_buf[i] != nums_with_zero[k] || smode_buf[i] != '\n') {
                 return _INVALID;
             }
+        }
+
+        for (int j = 0 ; j < 10 ; j++) {
+            if(smode_buf[i] == '\n') {
+                return _VALID;
+            }
+            if(smode_buf[i] == nums_with_zero[j]) {// check if its a number
+                break;
+            }
+
 
         } //inner nested loop
-        if (plus_valid_flag == _VALID) {
-            break;
-        }
-        
-
     }//outer nested loop
 
 }
