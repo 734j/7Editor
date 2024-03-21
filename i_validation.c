@@ -39,6 +39,7 @@ _NA (None of these cases)
 int validate_check_imm(char *smode_buf) { // check immediately for \n, 0 or numbers
 /*
 _INVALID (immediately stop validating and return invalid to everything)
+_IMM_NOTHING == _VALID(valid)
 _NA (None of these cases)
 _IMM_NUMBER (number immediately after L or N or whatever)
 */
@@ -92,6 +93,44 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
 
 }
 
+int validate_imm_numbers() {
+
+    int Kflag; 
+    char nums_with_zero[] = "0123456789";
+    // Check the rest with a loop. Start at 2
+    for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
+                                            // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
+        for (int j = 0 ; j < 10 ; j++) {
+            if(smode_buf[i] == nums_with_zero[j]) {//check if there is a number, if there is then next check
+                if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') { // if there was a number then check if theres a newline
+                    L_num_flag = _VALID;                                // if we had a newline then check the flags as valid and break out.
+                    valid_flag = _VALID;                                // it will break out here and then an if statement check will also check it again so that it can break out of the outer loop
+                
+                    break;
+                }
+                Kflag = _INVALID;
+                for (int k = 0 ; k < 10 ; k++) {
+                    if (smode_buf[i+1] == nums_with_zero[k]) { // We checked for newline earlier but since we didnt fine one
+                        Kflag = _VALID;                         // We check if theres a number. If theres a number then keep going
+                        break;                                  // If there is anything but a number then Return _INVALID
+                    }
+                }
+                if (Kflag == _INVALID) {
+                    return _INVALID;
+                }
+
+                break;
+            }
+        } //inner nested loop
+
+        if (valid_flag == _VALID) {
+            break;
+        }
+        
+
+    }//outer nested loop
+}
+
 int validate_L(char *smode_buf) {
 
     /*
@@ -113,76 +152,8 @@ int validate_L(char *smode_buf) {
     validate_decision = validate_check_p_m(smode_buf);
 
 
-    if (vcpm == _PLUS_CONTINUE) {
 
-    }
-
-
-    if (smode_buf[1] == '0') { // [1] because there is no + at 1. Number starts immediately after L
-        L_num_flag = _INVALID; // if 0 then its just invalid immediately
-    }
-
-    for (int i = 0 ; i < 9 ; i++) { // Check if it starts with a number
-        if (smode_buf[1] == nums[i]) {
-            num_flag = _VALID;
-            break;
-        }
-    }
-    
-    if (num_flag == 0) { // Start validating if there are numbers after L
-        int valid_flag = _INVALID;
-        L_num_flag = _INVALID; // False
-        int Kflag; 
-        char nums_with_zero[] = "0123456789";
-        // Check the rest with a loop. Start at 2
-        for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
-                                                // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
-            for (int j = 0 ; j < 10 ; j++) {
-                if(smode_buf[i] == nums_with_zero[j]) {//check if there is a number, if there is then next check
-                    if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') { // if there was a number then check if theres a newline
-                        L_num_flag = _VALID;                                // if we had a newline then check the flags as valid and break out.
-                        valid_flag = _VALID;                                // it will break out here and then an if statement check will also check it again so that it can break out of the outer loop
-                    
-                        break;
-                    }
-                    Kflag = _INVALID;
-                    for (int k = 0 ; k < 10 ; k++) {
-                        if (smode_buf[i+1] == nums_with_zero[k]) { // We checked for newline earlier but since we didnt fine one
-                            Kflag = _VALID;                         // We check if theres a number. If theres a number then keep going
-                            break;                                  // If there is anything but a number then Return _INVALID
-                        }
-                    }
-                    if (Kflag == _INVALID) {
-                        return _INVALID;
-                    }
-
-                    break;
-                }
-            } //inner nested loop
-
-            if (valid_flag == _VALID) {
-                break;
-            }
-            
-
-        }//outer nested loop
-    }// num_flag if-statement
-    if (L_num_flag == _VALID) {
-        return _VALID;
-    } 
-    if (L_num_flag == _INVALID) {
-        return _INVALID;
-    }
-
-    if (plus_num_flag == _ONE) {
-        return _VALID;
-    }
-
-    if (smode_buf[1] == '\n') {
-        return _VALID;
-    }
-
-    return _INVALID;
+    // this below will become validate_imm_numbers or something
     
 }
 

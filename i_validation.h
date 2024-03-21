@@ -6,9 +6,9 @@
 #include "7ed.h"
 #include <stdint.h>
 
-#define _PLUS_ONLY 1
+#define _PLUS_ONLY _VALID
 #define _PLUS_CONTINUE 2
-#define _PLUS_NOTHING 3
+#define _PLUS_NOTHING _VALID
 #define _IMM_NUMBER 4
 #define _IMM_NOTHING 5
 #define _CONTINUE 6
