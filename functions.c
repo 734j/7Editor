@@ -108,7 +108,7 @@ void shuffle(char arr[], int n) {
     }
 }
 
-int get_line(char filename[], long focus, char **line, size_t *start) { // Making this function was hell. Hardest thing ive coded in a while.
+int get_line(char filename[], long focus, char **line, size_t *start) {
     
     FILE *file;
     file = fopen(filename,"r"); // Open file
