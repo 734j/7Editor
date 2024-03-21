@@ -10,6 +10,88 @@
 // This will be the new input system for combining commands with line numbers
 // Work in progress and far from finished. This is not included when compiling normally.
 
+int validate_check_p_m(char *smode_buf) { // Check for +, -, +0, -0, +\n, or -\n
+/*
+_INVALID (immediately stop validating and return invalid to everything)
+_PLUS_ONLY (L+ only. Immediately valid. Return)
+_PLUS_CONTINUE (L+ And more numbers after it. Will make validate_plus_continue run)
+_NA (None of these cases)
+*/
+    if (smode_buf[1] == '+' || smode_buf[1] == '-') {
+        if (smode_buf[2] == '0') {
+            return _INVALID; // Only L0 (invalid)
+        }
+        if (smode_buf[2] == '\n') { // Only L+
+            return _PLUS_ONLY;
+        }
+
+        for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
+            if (smode_buf[2] == nums[i]) {
+                return _PLUS_CONTINUE; // if true then continue
+            }
+        }
+    }
+
+    return _NA;
+
+}
+
+int validate_check_imm(char *smode_buf) { // check immediately for \n, 0 or numbers
+/*
+_INVALID (immediately stop validating and return invalid to everything)
+_NA (None of these cases)
+_IMM_NUMBER (number immediately after L or N or whatever)
+*/
+    char nums[] = "123456789";
+
+    if (smode_buf[1] == '\n') {
+        return _IMM_NOTHING;
+    }
+    if (smode_buf[1] == '0') {
+        return _INVALID; 
+    }
+
+    for (int j = 0 ; j < 9 ; j++) { // Check if its just a number after
+            if (smode_buf[1] == nums[j]) {
+                return _IMM_NUMBER // 
+            }
+    }
+
+    return _NA; // how did we get here?
+
+}
+
+int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE then run this to further validate
+
+    int plus_valid_flag = _INVALID;
+    L_num_flag = _INVALID; // False
+    char nums_with_zero[] = "0123456789";
+    // Check the rest with a loop. Start at 2
+    for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
+                                            // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
+        for (int j = 0 ; j < 10 ; j++) {
+            if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
+                if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
+                    L_num_flag = _VALID;
+                    plus_valid_flag = _VALID;
+                    break;
+                }
+                break;
+            }
+            if(smode_buf[i+1] != nums_with_zero[j]) {
+                return _INVALID;
+            }
+
+        } //inner nested loop
+        if (plus_valid_flag == _VALID) {
+            break;
+        }
+        
+
+    }//outer nested loop
+
+}
+
 int validate_L(char *smode_buf) {
 
     /*
@@ -26,59 +108,15 @@ int validate_L(char *smode_buf) {
             
             path 3: If there is nothing else after the L (in this case just an L) then just return an L (DONE)
             */
+    int validate_decision = _NA;
 
-    char nums[] = "123456789";
-    int L_num_flag = 2;
-    int plus_num_flag = _INVALID; //If true the if statement will validate if input is valid after the +
-    int num_flag = _INVALID; // If true the if statement will validate if input is valid after L
+    validate_decision = validate_check_p_m(smode_buf);
 
-    if (smode_buf[1] == '+' || smode_buf[1] == '-') {
-        plus_num_flag = _ONE;
-        if (smode_buf[2] == '0') {
-            L_num_flag = _INVALID; // if 0 then its just invalid immediately
-        }
-        if (smode_buf[2] != '\n') { // If there is no return we set these flags to false. 
-            plus_num_flag = _INVALID;     // If there is a return then no flags are changed and thus we know that the input is only an L+
-            L_num_flag = _INVALID;
-        }
 
-        for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
-            if (smode_buf[2] == nums[i]) {
-                plus_num_flag = _VALID;
-                break;
-            }
-        }
+    if (vcpm == _PLUS_CONTINUE) {
+
     }
 
-
-    if (plus_num_flag == _VALID) {
-        int plus_valid_flag = _INVALID;
-        L_num_flag = _INVALID; // False
-        char nums_with_zero[] = "0123456789";
-        // Check the rest with a loop. Start at 2
-        for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
-                                                // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
-            for (int j = 0 ; j < 10 ; j++) {
-                if(smode_buf[i] == nums_with_zero[j]) {//check if its not a number. It could be the null terminator so we check if it is
-                    if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') {
-                        L_num_flag = _VALID;
-                        plus_valid_flag = _VALID;
-                        break;
-                    }
-                    break;
-                }
-                if(smode_buf[i+1] != nums_with_zero[j]) {
-                    return _INVALID;
-                }
-
-            } //inner nested loop
-            if (plus_valid_flag == _VALID) {
-                break;
-            }
-            
-
-        }//outer nested loop
-    }
 
     if (smode_buf[1] == '0') { // [1] because there is no + at 1. Number starts immediately after L
         L_num_flag = _INVALID; // if 0 then its just invalid immediately
