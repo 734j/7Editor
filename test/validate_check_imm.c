@@ -18,11 +18,17 @@ int main () {
 
     int ret = validate_check_imm(smode_buf);
 
+    if (ret == _IMM_NUMBER) {
+        printf("imm number\n");
+    }
     if(ret == _INVALID) {
         printf("?\n");
     }
     if(ret == _VALID) {
-        printf("valid plusonly\n");
+        printf("valid\n");
+    }
+    if(ret == _NA) {
+        printf("_NA\n");
     }
 
     return 0;

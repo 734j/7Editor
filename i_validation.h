@@ -10,7 +10,7 @@
 #define _PLUS_CONTINUE 2
 #define _PLUS_NOTHING _VALID
 #define _IMM_NUMBER 4
-#define _IMM_NOTHING 5
+#define _IMM_NOTHING _VALID
 #define _CONTINUE 6
 #define _NA 7
 

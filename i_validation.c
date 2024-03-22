@@ -53,6 +53,7 @@ _NA (None of these cases)
 _IMM_NUMBER (number immediately after L or N or whatever)
 */
     char nums[] = "123456789";
+    int iflag = _INVALID;
 
     if (smode_buf[1] == '\n') {
         return _IMM_NOTHING;
@@ -62,9 +63,15 @@ _IMM_NUMBER (number immediately after L or N or whatever)
     }
 
     for (int j = 0 ; j < 9 ; j++) { // Check if its just a number after
-            if (smode_buf[1] == nums[j]) {
-                return _IMM_NUMBER; 
-            }
+        iflag = _VALID;
+        if (smode_buf[1] == nums[j]) {
+            return _IMM_NUMBER; 
+        } else {
+            iflag = _INVALID;
+        }
+    }
+    if (iflag == _INVALID) {
+            return _INVALID;
     }
 
     return _NA; // how did we get here?
