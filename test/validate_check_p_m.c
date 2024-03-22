@@ -32,4 +32,6 @@ int main () {
         printf("valid\n");
     }
 
+    return 0;
+
 }

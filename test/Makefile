@@ -1,4 +1,7 @@
 MAKEFLAGS += -s
+CFLAGS_ALLTESTS=-fsanitize=address -Wfatal-errors -Wall -Wextra -g
+CFLAGS_SMODE=-fsanitize=address -Wfatal-errors -Wall -Werror -Wextra -g
+CC=gcc
 
 all: 7ed-TESTING
 7ed-TESTING:
@@ -17,13 +20,13 @@ clean:
 
 smode:
 	echo "CC input.c ---> smode"
-	cd .. && gcc -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address input.c i_validation.c -o test/smode
+	cd .. && $(CC) $(CFLAGS_SMODE) input.c i_validation.c -o test/smode
 
 alltests:
 	cd .. && make tests
-	gcc validate_check_p_m.c ../i_validation.c -o vcpm
+	$(CC) $(CFLAGS_ALLTESTS) validate_check_p_m.c ../i_validation.c -o vcpm
 	echo "CC ---> vcpm" 
-	gcc validate_check_imm.c ../i_validation.c -o vcimm
+	$(CC) $(CFLAGS_ALLTESTS) validate_check_imm.c ../i_validation.c -o vcimm
 	echo "CC ---> vcimm" 
-	gcc validate_plus_continue_tests.c ../i_validation.c -o vpct
+	$(CC) $(CFLAGS_ALLTESTS) validate_plus_continue_tests.c ../i_validation.c -o vpct
 	echo "CC ---> vpct" 

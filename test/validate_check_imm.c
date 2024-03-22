@@ -25,4 +25,6 @@ int main () {
         printf("valid plusonly\n");
     }
 
+    return 0;
+
 }

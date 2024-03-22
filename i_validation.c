@@ -96,6 +96,8 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
         }
     }//outer nested loop
 
+    return 0; // remove, its just here to make the compiler not output a bunch of warnings
+
 }
 
 int validate_imm_numbers(char *smode_buf) {
@@ -131,6 +133,8 @@ int validate_imm_numbers(char *smode_buf) {
         
 
     }//outer nested loop
+    return 0; // remove, its just here to make the compiler not output a bunch of warnings
+
 }
 
 int validate_L(char *smode_buf) {
@@ -153,10 +157,12 @@ int validate_L(char *smode_buf) {
 
     validate_decision = validate_check_p_m(smode_buf);
 
-
+    printf("%i\n", validate_decision); // remove, its just here to make the compiler not output a bunch of warnings
 
     // this below will become validate_imm_numbers or something
     
+    return 0; // remove, its just here to make the compiler not output a bunch of warnings
+
 }
 
 int validate_N(char *smode_buf) {
