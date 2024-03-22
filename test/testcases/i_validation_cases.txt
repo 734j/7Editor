@@ -1,16 +1,47 @@
 validate_check_p_m
 Positive input (Valid):
 L+
+L-
+L-1
 L+1
+L-2
 L+2
+L-3
 L+3
+L-9
 L+9
+L-10
 L+10
 L+90
 L+100
 L+900
 
+Positive (_NA):
+L0
+L1
+L100
+LL
+Lasd
+L9
+L90
+L900
+
 Negative (Invalid):
+L+0
+L-0
+L--
+L++
+L+L
+L-L
+L+asd
+L-asd
+L-0-
+L+0+
+L+0-
+L-0+
+L-0
+
+Overall results: Tested OK. Seems like its working like it should now. 
 
 validate_check_imm
 Positive input (Valid):

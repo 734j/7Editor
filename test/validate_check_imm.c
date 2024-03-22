@@ -22,7 +22,7 @@ int main () {
         printf("?\n");
     }
     if(ret == _VALID) {
-        printf("valid\n");
+        printf("valid plusonly\n");
     }
 
 }

@@ -19,6 +19,7 @@ _PLUS_CONTINUE (L+ And more numbers after it. Will make validate_plus_continue r
 _NA (None of these cases)
 */
     char nums[] = "123456789";
+    int iflag = _INVALID;
     if (smode_buf[1] == '+' || smode_buf[1] == '-') {
         if (smode_buf[2] == '0') {
             return _INVALID; // Only L0 (invalid)
@@ -28,9 +29,15 @@ _NA (None of these cases)
         }
 
         for (int i = 0 ; i < 9 ; i++) { // Check if theres a number after +
+            iflag = _VALID;
             if (smode_buf[2] == nums[i]) {
                 return _PLUS_CONTINUE; // if true then continue
+            } else {
+                iflag = _INVALID;
             }
+        }
+        if (iflag == _INVALID) {
+            return _INVALID;
         }
     }
 

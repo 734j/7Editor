@@ -18,6 +18,13 @@ int main () {
 
     int ret = validate_check_p_m(smode_buf);
 
+    if(ret == _NA) {
+        printf("NA\n");
+    }
+    if(ret == _PLUS_CONTINUE) {
+        printf("plus continue\n");
+    }
+
     if(ret == _INVALID) {
         printf("?\n");
     }

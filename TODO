@@ -1,7 +1,7 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - test validate_check_p_m
+1 - test validate_check_p_m (Tested OK)
 1 - test validate_check_imm
 1 - test validate_plus_continue
 1 - testcases for the 3 above
