@@ -30,3 +30,5 @@ alltests:
 	echo "CC ---> vcimm" 
 	$(CC) $(CFLAGS_ALLTESTS) validate_plus_continue_tests.c ../i_validation.c -o vpct
 	echo "CC ---> vpct" 
+	$(CC) $(CFLAGS_ALLTESTS) validate_imm_numbers.c ../i_validation.c -o vimmn
+	echo "CC ---> vimmn" 
