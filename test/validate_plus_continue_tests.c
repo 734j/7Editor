@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include "7ed.h"
-#include "i_validation.h"
-#include "input.h"
+#include "../7ed.h"
+#include "../i_validation.h"
+#include "../input.h"
 #include <stdint.h>
 
 // Test for validate_plus_continue
