@@ -66,4 +66,27 @@ Overall results: Tested OK. Seems like its working like it should.
 
 validate_plus_continue
 Positive input (Valid):
+L+1
+L+10
+L+9
+L+90
+L+5
+L+50
+L+11
+L+99
+L+345345
+L+12313213213213
+
 Negative (Invalid):
+L+1L
+L+11L
+L+9L
+L+5L
+L+90L
+L+500+
+L+23+23
+L+13++
+L-10
+L+1+
+
+Overall results: Tested OK. Seems fine.

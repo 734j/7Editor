@@ -103,7 +103,7 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
         }
     }//outer nested loop
 
-    return 0; // remove, its just here to make the compiler not output a bunch of warnings
+    return _NA;
 
 }
 
