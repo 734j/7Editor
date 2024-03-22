@@ -90,3 +90,9 @@ L-10
 L+1+
 
 Overall results: Tested OK. Seems fine.
+
+validate_imm_numbers
+Positive input (Valid):
+Negative (Invalid):
+
+Overall results:
