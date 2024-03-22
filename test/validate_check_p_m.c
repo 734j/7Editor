@@ -8,7 +8,7 @@
 #include "input.h"
 #include <stdint.h>
 
-// Test for validate_plus_continue
+// Test for validate_check_p_m
 
 int main () {
     uint64_t focus = 1;
@@ -16,7 +16,7 @@ int main () {
     fprintf(stdout, "(%lu): ", focus); // UI
     fgets(smode_buf, SMODE_MAX_SIZE, stdin); // Read user input
 
-    int ret = validate_plus_continue(smode_buf);
+    int ret = validate_check_p_m(smode_buf);
 
     if(ret == _INVALID) {
         printf("?\n");

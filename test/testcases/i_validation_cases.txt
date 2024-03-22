@@ -1,0 +1,21 @@
+validate_check_p_m
+Positive input (Valid):
+L+
+L+1
+L+2
+L+3
+L+9
+L+10
+L+90
+L+100
+L+900
+
+Negative (Invalid):
+
+validate_check_imm
+Positive input (Valid):
+Negative (Invalid):
+
+validate_plus_continue
+Positive input (Valid):
+Negative (Invalid):
