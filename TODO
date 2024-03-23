@@ -4,4 +4,4 @@ This is not my overall big planning board. (1 highest prio, 10 lowest)
 1 - implement validate_imm_numbers
 1 - test validate_imm_numbers
 1 - testcases for the function above
-2 - continue work on validate_imm_numbers
+2 - re-implement validate_L
