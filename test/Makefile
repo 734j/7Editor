@@ -13,9 +13,11 @@ clean:
 	rm -f vcpm
 	echo "rm -f vcpm"
 	rm -f vcimm
-	echo "rm -f vcpm"
+	echo "rm -f vcimm"
 	rm -f vpct
-	echo "rm -f vcpm"
+	echo "rm -f vpct"
+	rm -f vimmn
+	echo "rm -f vimmn"
 	echo "Cleaned."
 
 smode:
