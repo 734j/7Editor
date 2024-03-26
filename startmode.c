@@ -25,15 +25,24 @@ int ncat(char filename[]) {
     return 0;
 }
 
-int startmode(char filename[]) {
-    // The entry to the program. Count lines and display the count. Also show which file is being edited.
-    uint64_t Flines;
+int display_name_linecount(char *filename, uint64_t Flines) {
+
     int returnval = count_lines_in_file(filename, &Flines); 
     if (returnval == 1) {
         return 1;
     }
     fprintf(stdout,"%s %lu lines\n", filename, Flines);
 
+    return 0;
+}
+
+int startmode(char filename[]) {
+    // The entry to the program. Count lines and display the count. Also show which file is being edited.
+    uint64_t Flines;
+    int dnl = display_name_linecount(filename, Flines);
+    if (dnl == 1) {
+        return EXIT_FAILURE;
+    }
     uint64_t focus = 1; // The focus variable. Which is the actual line number we have "selected"
 
     while(1) { // The main loop to get the "UI" started
@@ -130,13 +139,11 @@ int startmode(char filename[]) {
             case 'C':
             case 'c':
                 
-                uint64_t CFlines;
-                int returnval = count_lines_in_file(filename, &CFlines);
-                if (returnval == 1) {
+                int dnl = display_name_linecount(filename, Flines);
+                if (dnl == 1) {
                     return EXIT_FAILURE;
                 }
-                fprintf(stdout,"%s %zu lines\n", filename, CFlines);
-
+                
             break;
             case 'Q':
             case 'q':
