@@ -109,39 +109,30 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
 
 int validate_imm_numbers(char *smode_buf) {
 
-    int Kflag; 
+    // Validate after L when its clear that there are only numbers
     char nums_with_zero[] = "0123456789";
-    // Check the rest with a loop. Start at 2
+    int kflag = _INVALID;
+    //Start at 1
     for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                             // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
         for (int j = 0 ; j < 10 ; j++) {
-            if(smode_buf[i] == nums_with_zero[j]) {//check if there is a number, if there is then next check
-                if (smode_buf[i+1] == '\n' || smode_buf[i+1] == '\0') { // if there was a number then check if theres a newline
-                                                // it will break out here and then an if statement check will also check it again so that it can break out of the outer loop
-                
-                    break;
-                }
-                Kflag = _INVALID;
-                for (int k = 0 ; k < 10 ; k++) {
-                    if (smode_buf[i+1] == nums_with_zero[k]) { // We checked for newline earlier but since we didnt fine one
-                        Kflag = _VALID;                         // We check if theres a number. If theres a number then keep going
-                        break;                                  // If there is anything but a number then Return _INVALID
-                    }
-                }
-                if (Kflag == _INVALID) {
-                    return _INVALID;
-                }
-
+            
+            if (smode_buf[i] == '\n') {
+                return _VALID;
+            }
+            kflag = _INVALID;
+            if (smode_buf[i] == nums_with_zero[j]) {
+                kflag = _VALID;
                 break;
             }
+
         } //inner nested loop
-
-       
-        
-
+        if (kflag == _INVALID) {
+            return _INVALID;
+        }
     }//outer nested loop
-    return 0; // remove, its just here to make the compiler not output a bunch of warnings
 
+    return _NA;
 }
 
 int validate_L(char *smode_buf) {

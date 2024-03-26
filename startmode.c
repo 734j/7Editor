@@ -25,13 +25,14 @@ int ncat(char filename[]) {
     return 0;
 }
 
-int display_name_linecount(char *filename, uint64_t Flines) {
+int display_name_linecount(char *filename) {
 
+    uint64_t Flines;
     int returnval = count_lines_in_file(filename, &Flines); 
     if (returnval == 1) {
         return 1;
     }
-    fprintf(stdout,"%s %lu lines\n", filename, Flines);
+    fprintf(stdout,"%s %ld lines\n", filename, Flines);
 
     return 0;
 }
@@ -39,7 +40,7 @@ int display_name_linecount(char *filename, uint64_t Flines) {
 int startmode(char filename[]) {
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
     uint64_t Flines;
-    int dnl = display_name_linecount(filename, Flines);
+    int dnl = display_name_linecount(filename);
     if (dnl == 1) {
         return EXIT_FAILURE;
     }
@@ -139,7 +140,7 @@ int startmode(char filename[]) {
             case 'C':
             case 'c':
                 
-                int dnl = display_name_linecount(filename, Flines);
+                int dnl = display_name_linecount(filename);
                 if (dnl == 1) {
                     return EXIT_FAILURE;
                 }

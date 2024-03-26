@@ -93,6 +93,25 @@ Overall results: Tested OK. Seems fine.
 
 validate_imm_numbers
 Positive input (Valid):
-Negative (Invalid):
+L1
+L2
+L9
+L10
+L10000
+L999
+L1112
+L3987453
 
-Overall results:
+Negative (Invalid):
+L1-
+L9+
+L1L
+L9a
+L1F
+L9e
+L100000000L
+L942sA
+L223+213123
+L2+1
+
+Overall results: Tested OK. Seems fine.
