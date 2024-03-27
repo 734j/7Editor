@@ -151,15 +151,42 @@ int validate_L(char *smode_buf) {
             
             path 3: If there is nothing else after the L (in this case just an L) then just return an L (DONE)
             */
-    int validate_decision = _NA;
+    int validate_decision = validate_check_p_m(smode_buf);
 
-    validate_decision = validate_check_p_m(smode_buf);
+    int vcimm = FALSE_7ED;
+    int plus_continue = TRUE_7ED;
+    switch(validate_decision) {
+        case _PLUS_ONLY:
+            printf("PLUS ONLY\n");
+        break;
+        case _PLUS_CONTINUE:
+            printf("PLUS CONTINUE\n");
+        break;
+        case _INVALID:
+            printf("INVALID\n");
+        break;
+        case _NA:
+            printf("NA\n");
+            vcimm = TRUE_7ED;
+            plus_continue = FALSE_7ED;
+        break;
+    }
 
-    printf("%i\n", validate_decision); // remove, its just here to make the compiler not output a bunch of warnings
+    if (vcimm == TRUE_7ED) { // This is where L0 is caught
+        
+        printf("vcimm false\n");
+
+    }
+
+    if (plus_continue == FALSE_7ED) {
+
+        printf("plus_continue true\n");
+
+    }
 
     // this below will become validate_imm_numbers or something
     
-    return 0; // remove, its just here to make the compiler not output a bunch of warnings
+    return _INVALID; // temporary invalid
 
 }
 
