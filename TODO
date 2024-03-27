@@ -1,7 +1,9 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - implement validate_imm_numbers
-1 - test validate_imm_numbers
-1 - testcases for the function above
-2 - re-implement validate_L
+1 - Write testcases for validate_L
+1 - Perform some tests on validate_L
+2 - Have a big long think about how validate_N should work
+2 - implement validate_N
+2 - Perform tests on validate_N
+3 - Have a big long think about how the strings will be processed and translate in to actually doing things in the program. 
