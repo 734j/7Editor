@@ -172,7 +172,7 @@ int validate_L(char *smode_buf) {
         break;
     }
 
-    if (vcimm == TRUE_7ED) {
+    if (vcimm == TRUE_7ED) { // This is where L0 is caught
         
         printf("vcimm false\n");
 
