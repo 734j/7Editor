@@ -187,6 +187,21 @@ int validate_L(char *smode_buf) {
         }
         if (imm_number == TRUE_7ED) {
             printf("vimmn start\n");
+            int vimmn_result = validate_imm_numbers(smode_buf);
+            switch(vimmn_result) {
+                case _VALID:
+                    printf("valid\n");
+                    return _VALID;
+                break;
+                case _INVALID:
+                    printf("invalid\n");
+                    return _INVALID;
+                break;
+                case _NA:
+                    printf("NA\n");
+                    return _INVALID;
+                break;
+            }
         }
                             // after vcimm we start vimmn
     }
@@ -194,6 +209,22 @@ int validate_L(char *smode_buf) {
     if (plus_continue == TRUE_7ED) {
 
         printf("validate plus continue \n");
+        int vpct_result = validate_plus_continue(smode_buf);
+        switch(vpct_result) {
+            case _VALID:
+                printf("valid\n");
+                return _VALID;
+            break;
+            case _INVALID:
+                printf("invalid\n");
+                return _INVALID;
+            break;
+            case _NA:
+                printf("NA\n");
+                return _INVALID;
+            break;
+
+        }
 
     }
 
