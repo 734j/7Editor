@@ -137,33 +137,24 @@ int validate_imm_numbers(char *smode_buf) {
 
 int validate_L(char *smode_buf) {
 
-    /*
-            Check for + (or -)
-            path 1: If there is a + then check if there is anything else after it. If not then return L+. (DONEish)
-            1.1: If there is a anything that is not a number from 0-9 then return '?' (safety check)
-            1.2: If there is a number after the + then check for another number until there is no more numbers. For example we return L+34
-            1.3: If there happens to be something that is not a number from 0-9 in 1.2 case then immediately return '?' (safety check)
-            
-            path 2: If there is a number from 1-9 immediately after the L then keep checking for numbers (between 0-9) until there is no more. (DONE)
-            A valid return would be something like L24 (DONE)
-            2.1: If there is anything that is not a number from 1-9 then return '?' (DONE)
+    // this is still a huge function, validating strings is complicated....
+    // although i will admit that the code is overall just so much easier to work with. Still happy that i fixed that.
 
-            
-            path 3: If there is nothing else after the L (in this case just an L) then just return an L (DONE)
-            */
-    int validate_decision = validate_check_p_m(smode_buf);
+    int vcpm_result = validate_check_p_m(smode_buf);
 
     int vcimm = FALSE_7ED;
     int plus_continue = TRUE_7ED;
-    switch(validate_decision) {
+    switch(vcpm_result) {
         case _PLUS_ONLY:
             printf("PLUS ONLY\n");
+            return _VALID;
         break;
         case _PLUS_CONTINUE:
             printf("PLUS CONTINUE\n");
         break;
         case _INVALID:
             printf("INVALID\n");
+            return _INVALID;
         break;
         case _NA:
             printf("NA\n");
@@ -173,14 +164,67 @@ int validate_L(char *smode_buf) {
     }
 
     if (vcimm == TRUE_7ED) { // This is where L0 is caught
-        
-        printf("vcimm false\n");
-
+        printf("vcimm start\n");
+        int vcimm_result = validate_check_imm(smode_buf);
+        int imm_number = FALSE_7ED;
+        switch(vcimm_result) {
+            case _IMM_NUMBER:
+                printf("imm number\n");
+                imm_number = TRUE_7ED;
+            break;
+            case _VALID:
+                printf("valid\n");
+                return _VALID;
+            break;
+            case _INVALID:
+                printf("invalid\n");
+                return _INVALID;
+            break;
+            case _NA:
+                printf("NA\n");
+                return _INVALID;
+            break;
+        }
+        if (imm_number == TRUE_7ED) {
+            printf("vimmn start\n");
+            int vimmn_result = validate_imm_numbers(smode_buf);
+            switch(vimmn_result) {
+                case _VALID:
+                    printf("valid\n");
+                    return _VALID;
+                break;
+                case _INVALID:
+                    printf("invalid\n");
+                    return _INVALID;
+                break;
+                case _NA:
+                    printf("NA\n");
+                    return _INVALID;
+                break;
+            }
+        }
+                            // after vcimm we start vimmn
     }
 
-    if (plus_continue == FALSE_7ED) {
+    if (plus_continue == TRUE_7ED) {
 
-        printf("plus_continue true\n");
+        printf("validate plus continue \n");
+        int vpct_result = validate_plus_continue(smode_buf);
+        switch(vpct_result) {
+            case _VALID:
+                printf("valid\n");
+                return _VALID;
+            break;
+            case _INVALID:
+                printf("invalid\n");
+                return _INVALID;
+            break;
+            case _NA:
+                printf("NA\n");
+                return _INVALID;
+            break;
+
+        }
 
     }
 
