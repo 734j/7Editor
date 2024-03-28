@@ -115,3 +115,63 @@ L223+213123
 L2+1
 
 Overall results: Tested OK. Seems fine.
+
+validate_L
+Positive (valid):
+L
+L+ 
+L- 
+L1 
+L10 
+L9 
+L90 
+L5 
+L50 
+L500 
+L900 
+L100
+L9993221
+L100000000000
+L9234572
+L112323
+L100334
+L+1 
+L-1 
+L+10
+L+9
+L+90 
+L+1000000000
+L+9992
+L+1020023023
+L-2323232323 
+
+Negative (invalid):
+L++
+L--
+L+0
+L-0
+L0
+L00 
+LL 
+LN 
+Lsada
+L+a
+L+abcdefg 
+L-a 
+L+0111a
+L01203103
+L11212
+L+12n
+L10+10
+L10-10
+L-1-1+1-1
+L+1+1+1
+L10+10+10
+L+10+1000
+L10+10
+l+10l
+L10?
+L+10?
+L?10
+
+Overall resuts: Tested OK. I don't think ive missed any checks for anything but hey you can never be sure. This is acceptable for now.
