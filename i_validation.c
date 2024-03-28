@@ -242,14 +242,9 @@ int validate_N(char *smode_buf) {
     N+1 will do the same (DONE)
     In short: N = N+ = N+1 (They will all create 1 line after the focus line)
 
-    N+2 Will create 2 lines after focus line. (DONE)
-    N+10 Will create 10 lines after the focus line (DONE)
-    N10 Will create a line after line 10 (NOT DONE)
-    
-    N- will work a bit differently. Since N+, N+1, N work the same N wont be available for making lines in the opposite direction.
-    I am not even sure if i want '-' to be a valid input. Or how ill even do it. For now i will make all '-'/negatives ivalid. 
-
-    If focus is 1 and we say N-10 Then it will create 10 lines "before" 1 (out of scope for validate_N)
+    N+2 Will create 2 lines after focus line.
+    N+10 Will create 10 lines after the focus line 
+    N10 Will create a line after line 10
 
     */
     char nums_with_zero[] = "0123456789";
