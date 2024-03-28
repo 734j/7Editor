@@ -4,4 +4,5 @@ This is not my overall big planning board. (1 highest prio, 10 lowest)
 1 - Have a big long think about how validate_N should work
 1 - implement validate_N
 1 - Perform tests on validate_N
+2 - add some sort of length check
 3 - Have a big long think about how the strings will be processed and translate in to actually doing things in the program. 

@@ -13,10 +13,21 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
     // char *single is for p, e, c, q, a
     // char **multiple is for L, n, x and d. Although it can be expanded to be used in p and e. 
 
-    char smode_buf[SMODE_MAX_SIZE]; // Smode buffer
+    char smode_buf[SMODE_MAX_SIZE] = { '\0' }; // Smode buffer
     fprintf(stdout, "(%lu): ", focus); // UI
     fgets(smode_buf, SMODE_MAX_SIZE, stdin); // Read user input
     
+    int sbl = 0;
+    for ( ; sbl < SMODE_MAX_SIZE ; sbl++) {
+        if(smode_buf[sbl] == '\0') {
+            break;
+        }
+    }
+    if (sbl >= SMODE_MAX_INPUT_SIZE) {
+        fprintf(stderr, "sbl > SMODE_MAX_SIZE\n");
+        return _FAIL;
+    }
+
     switch (smode_buf[0]) {
                 // from L to D there will be the 'Multiple' options. In their respective cases i will check if the input is valid or not.
                 // I will not make the program clean the input because that could lead to assumptions.
