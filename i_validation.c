@@ -165,7 +165,7 @@ int validate_imm_numbers(char *smode_buf) {
     return _NA;
 }
 
-int validate_L(char *smode_buf, int mode) {
+int validate_LN(char *smode_buf, int mode) {
 
     // this is still a huge function, validating strings is complicated....
     // although i will admit that the code is overall just so much easier to work with. Still happy that i fixed that.

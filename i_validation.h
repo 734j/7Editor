@@ -24,6 +24,4 @@ int validate_check_imm(char *smode_buf);
 
 int validate_plus_continue(char *smode_buf);
 
-int validate_L(char *smode_buf, int mode);
-
-int validate_N(char *smode_buf);
+int validate_LN(char *smode_buf, int mode);
