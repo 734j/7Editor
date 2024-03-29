@@ -34,7 +34,7 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
         case 'l':
         case 'L': {
             
-            int chk = validate_L(smode_buf);
+            int chk = validate_L(smode_buf, MODE_L);
             if (chk == _INVALID) {
                 return _FAIL;
             }
@@ -46,7 +46,7 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
         case 'n':
         case 'N': {
             
-            int chk = validate_N(smode_buf);
+            int chk = validate_L(smode_buf, MODE_N);
             if (chk == _INVALID) {
                 return _FAIL;
             }
