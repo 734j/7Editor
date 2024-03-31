@@ -1,9 +1,6 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - Implement 'd' validation
-1 - Test 'd' validation
-2 - Implement 'x' validation
-2 - Test 'x' validation
-2 - improve the length check (i have NO idea how it actually works because im slow stupid!)
-3 - Have a big long think about how the strings will be processed and translate in to actually doing things in the program.
+1 - Have a big long think about how the strings will be processed and translate in to actually doing things in the program.
+1 - implement the logic that will actually interpret the validated input
+3 - improve the length check (i have NO idea how it actually works because im slow stupid!)
