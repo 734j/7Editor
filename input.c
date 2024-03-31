@@ -53,18 +53,34 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
             *multiple = (char *)malloc(strlen(smode_buf) + 1);
             strcpy(*multiple, smode_buf);
             return _MULTIPLE;
+
         break; }
         case 'x':
-        case 'X':
-            return _MULTIPLE;
-        break;
-        case 'd':
-        case 'D':
+        case 'X': {
 
-            *multiple = (char *)malloc(strlen(smode_buf) + 1); // just a test
+            // X will work with MODE_N mode for now. I may update in the future to use MODE_L but for now i will only use MODE_N for simplicity sake.
+            int chk = validate_LN(smode_buf, MODE_N);
+            if (chk == _INVALID) {
+                return _FAIL;
+            }
+            *multiple = (char *)malloc(strlen(smode_buf) + 1);
             strcpy(*multiple, smode_buf);
             return _MULTIPLE;
-        break; // singles below this point
+
+        break; }
+        case 'd':
+        case 'D': {
+            
+            // X will work with MODE_N mode for now. I may update in the future to use MODE_L but for now i will only use MODE_N for simplicity sake.
+            int chk = validate_LN(smode_buf, MODE_N);
+            if (chk == _INVALID) {
+                return _FAIL;
+            }
+            *multiple = (char *)malloc(strlen(smode_buf) + 1);
+            strcpy(*multiple, smode_buf);
+            return _MULTIPLE;
+
+        break; }// singles below this point
         case 'p':
         case 'P':
             *single = smode_buf[0];

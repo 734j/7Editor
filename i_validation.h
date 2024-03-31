@@ -13,8 +13,8 @@
 #define _IMM_NOTHING _VALID
 #define _CONTINUE 6
 #define _NA 7
-#define MODE_L 76
-#define MODE_N 78
+#define MODE_L 76 // MODE_L works for Commands with + and -
+#define MODE_N 78 // MODE_N works for Commands with + only
 
 int validate_imm_numbers(char *smode_buf);
 
