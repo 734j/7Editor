@@ -26,7 +26,7 @@ int startmode(char filename[]);
 
 int get_line(char filename[], long focus, char **line, size_t *start);
 
-int editmode(char filename[], long focus);
+int editmode(char filename[], uint64_t focus);
 
 int new_line(char filename[], long new_line_pos_temp);
 

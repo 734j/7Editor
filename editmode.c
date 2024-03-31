@@ -226,7 +226,7 @@ int remove_line_contents(char filename[], long focus) { // removes contents of a
 
 }
 
-int editmode(char filename[], long focus) { // the editing interface
+int editmode(char filename[], uint64_t focus) { // the editing interface
 
     char *line;
     size_t start;

@@ -106,6 +106,9 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
             *single = smode_buf[0];
             return _SINGLE;
         break;
+        case '\n':
+            return _RETURN;
+        break;
 
     }
 

@@ -39,30 +39,52 @@ int display_name_linecount(char *filename) {
     return 0;
 }
 
-int call_singles(char single) {
+int call_singles(char single, uint64_t focus, char *filename) {
 
     switch(single) {
         case 'p':
         case 'P':
-            
+
+            char *line;
+            size_t start;
+            int ret = get_line(filename, focus, &line, &start);
+            if (ret == 1) {
+                return EXIT_FAILURE;
+            }
+            fprintf(stdout, "%s", line);
+            free(line);
+
         break;
         case 'e':
         case 'E':
 
+            editmode(filename, focus);
+            
         break;
         case 'c':
         case 'C':
+
+            int dnl = display_name_linecount(filename);
+            if (dnl == 1) {
+                return EXIT_FAILURE;
+            }
 
         break;
         case 'q':
         case 'Q':
 
+            exit(EXIT_SUCCESS);
+
         break;
         case 'a':
         case 'A':
 
+            ncat(filename);
+
         break;
     }
+
+    return 0;
 }
 
 int startmode(char filename[]) {
@@ -81,8 +103,7 @@ int startmode(char filename[]) {
         switch (smode_input_ret) {
 
             case _SINGLE:
-                fprintf(stdout, "single\n");
-                fprintf(stdout, "%c\n", single);
+                call_singles(single, focus, filename);
             break;
             case _MULTIPLE:
                 fprintf(stdout, "multiple\n");
@@ -91,6 +112,8 @@ int startmode(char filename[]) {
             break;
             case _FAIL:
                 fprintf(stdout, "?\n");
+            break;
+            case _RETURN: // if user just preses 'return' button
             break;
 
         }

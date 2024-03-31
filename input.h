@@ -9,6 +9,7 @@
 #define SMODE_MAX_SIZE 33
 #define SMODE_MAX_INPUT_SIZE 32
 
+#define _RETURN 3
 #define _ONE 1
 #define _SINGLE 1
 #define _MULTIPLE 2 
