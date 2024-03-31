@@ -39,6 +39,32 @@ int display_name_linecount(char *filename) {
     return 0;
 }
 
+int call_singles(char single) {
+
+    switch(single) {
+        case 'p':
+        case 'P':
+            
+        break;
+        case 'e':
+        case 'E':
+
+        break;
+        case 'c':
+        case 'C':
+
+        break;
+        case 'q':
+        case 'Q':
+
+        break;
+        case 'a':
+        case 'A':
+
+        break;
+    }
+}
+
 int startmode(char filename[]) {
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
     int dnl = display_name_linecount(filename);
@@ -47,21 +73,27 @@ int startmode(char filename[]) {
     }
     uint64_t focus = 1; // The focus variable. Which is the actual line number we have "selected"
 
-    char *multiple;
-    char single;
-    int smode_input_ret = smode_input(&single, &multiple, focus);
-    if (smode_input_ret == _SINGLE) {
-        fprintf(stdout, "single\n");
-        fprintf(stdout, "%c\n", single);
+    while (1) {
+        char *multiple;
+        char single;
+        int smode_input_ret = smode_input(&single, &multiple, focus);
+
+        switch (smode_input_ret) {
+
+            case _SINGLE:
+                fprintf(stdout, "single\n");
+                fprintf(stdout, "%c\n", single);
+            break;
+            case _MULTIPLE:
+                fprintf(stdout, "multiple\n");
+                fprintf(stdout, "%s", multiple);
+                free(multiple);
+            break;
+            case _FAIL:
+                fprintf(stdout, "?\n");
+            break;
+
+        }
+        
     }
-    if (smode_input_ret == _MULTIPLE) {
-        fprintf(stdout, "multiple\n");
-        fprintf(stdout, "%s", multiple);
-        free(multiple);
-    }
-    if (smode_input_ret == _FAIL) {
-        fprintf(stdout, "?\n");
-    }
-    
-    return EXIT_SUCCESS;
 }
