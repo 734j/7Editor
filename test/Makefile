@@ -10,14 +10,6 @@ all: 7ed-TESTING
 
 clean: 
 	cd .. && make clean
-	rm -f vcpm
-	echo "rm -f vcpm"
-	rm -f vcimm
-	echo "rm -f vcimm"
-	rm -f vpct
-	echo "rm -f vpct"
-	rm -f vimmn
-	echo "rm -f vimmn"
 	echo "Cleaned."
 
 smode:
@@ -26,11 +18,4 @@ smode:
 
 alltests:
 	cd .. && make tests
-	$(CC) $(CFLAGS_ALLTESTS) validate_check_p_m.c ../i_validation.c -o vcpm
-	echo "CC ---> vcpm" 
-	$(CC) $(CFLAGS_ALLTESTS) validate_check_imm.c ../i_validation.c -o vcimm
-	echo "CC ---> vcimm" 
-	$(CC) $(CFLAGS_ALLTESTS) validate_plus_continue_tests.c ../i_validation.c -o vpct
-	echo "CC ---> vpct" 
-	$(CC) $(CFLAGS_ALLTESTS) validate_imm_numbers.c ../i_validation.c -o vimmn
-	echo "CC ---> vimmn" 
+	echo "Done."

@@ -16,3 +16,5 @@
 #define _VALID 0 // this may only be used to mark as valid or invalid from the validate functions
 #define _INVALID -1 // this may only be used to mark as valid or invalid from the validate functions
                     // _FAIL and _INVALID are sorta tied to eachother
+
+int smode_input(char *single, char **multiple, uint64_t focus);
