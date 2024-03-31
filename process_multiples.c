@@ -7,4 +7,3 @@
 #include "input.h"
 #include "i_validation.h"
 #include <stdint.h>
-
