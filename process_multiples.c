@@ -17,10 +17,41 @@ int check_L_linecount(uint64_t Flines, uint64_t focus) {
     return _VALID;
 }
 
-int call_L_plus_continue(char *multiple) {
+uint64_t call_L_plus_continue(char *multiple) {
 
     fprintf(stdout, "+ or - CONTINUE %s\n", multiple);
     return 0;
+}
+
+uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
+
+    char buf[32] = { '\0' };
+    fprintf(stdout, "(L): ");
+    fgets(buf, 30, stdin);
+
+    if (buf[0] == '\n') {
+        return focus;
+    }
+
+    char *endptr;
+    uint64_t new_focus = strtol(buf, &endptr, 10);
+    errno = 0;
+    if (errno == ERANGE) {
+        return focus;
+    }
+    if (endptr == buf) {
+        return focus;
+    }
+    if (*endptr != '\n') {
+        return focus;
+    }
+
+    int cll = check_L_linecount(Flines, new_focus);
+    if (cll == _INVALID) {
+        return focus;
+    }
+
+    return new_focus;
 }
 
 uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) {
@@ -50,7 +81,8 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
 
     if (multiple[1] == '\n') {
         imm = _NA;
-        fprintf(stdout, "L only\n");
+        focus = call_L_only(focus, Flines);
+        return focus;
     }
 
     if (multiple[1] == '+' || multiple[1] == '-') {
