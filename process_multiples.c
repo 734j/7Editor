@@ -8,20 +8,37 @@
 #include "i_validation.h"
 #include <stdint.h>
 
+int check_L_linecount(uint64_t Flines, uint64_t focus) {
+
+    if (focus < 1 || focus > Flines) {
+        fprintf(stderr, "check_L_linecount()\n");
+        return _INVALID;
+    }
+    return _VALID;
+}
+
 int call_L_plus_continue(char *multiple) {
 
     fprintf(stdout, "+ or - CONTINUE %s\n", multiple);
     return 0;
 }
 
-uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m) {
+uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) {
     switch (p_or_m) {
-        case '+':
+        case '+': {
+            int cll = check_L_linecount(Flines, focus+1);
+            if (cll == _INVALID) {
+                return focus;
+            }
             return focus+1;
-        break;
-        case '-':
+        break; }
+        case '-': {
+            int cll = check_L_linecount(Flines, focus-1);
+            if (cll == _INVALID) {
+                return focus;
+            }
             return focus-1;
-        break;
+        break; }
     }
 
     return _NA;
@@ -39,7 +56,7 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
     if (multiple[1] == '+' || multiple[1] == '-') {
         imm = _NA;
         if (multiple[2] == '\n') { // This is where - and + only inputs happen and get processed
-            focus = call_L_plus_minus_only(focus, multiple[1]);
+            focus = call_L_plus_minus_only(focus, multiple[1], Flines);
             return focus;
         }
         call_L_plus_continue(multiple);

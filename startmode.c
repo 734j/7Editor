@@ -100,10 +100,12 @@ int startmode(char filename[]) {
     while (1) {
         char *multiple;
         char single;
-        int clif = count_lines_in_file(filename, Flines);
-        if (clif == )
+        int clif = count_lines_in_file(filename, &Flines);
+        if (clif == 1) {
+            return EXIT_FAILURE;
+        }
 
-        int smode_input_ret = smode_input(&single, &multiple, focus, Flines);
+        int smode_input_ret = smode_input(&single, &multiple, focus);
 
         switch (smode_input_ret) {
 
@@ -116,7 +118,7 @@ int startmode(char filename[]) {
                 switch(multiple[0]) {
                     case 'l':
                     case 'L':
-                        focus = call_L(multiple, focus);
+                        focus = call_L(multiple, focus, Flines);
                     break;  
                     case 'n':
                     case 'N':
