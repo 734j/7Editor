@@ -16,8 +16,8 @@ clean:
 	rm -f test/smode
 
 tests:
-	echo "CC 7ed.c functions.c startmode.c editmode.c ---> test/$(TESTTARGET)"
-	$(CC) $(CFLAGS_TESTBIN) 7ed.c functions.c startmode.c editmode.c input.c i_validation.c -o test/$(TESTTARGET)
+	echo "CC 7ed.c functions.c startmode.c editmode.c i_validation.c process_multiples.c ---> test/$(TESTTARGET)"
+	$(CC) $(CFLAGS_TESTBIN) 7ed.c functions.c startmode.c editmode.c input.c i_validation.c process_multiples.c -o test/$(TESTTARGET)
 
 install:
 	cp $(TARGET) $(INSTALL_DIRECTORY)

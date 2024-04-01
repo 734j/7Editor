@@ -6,6 +6,7 @@
 #include "7ed.h"
 #include "input.h"
 #include "i_validation.h"
+#include "process_multiples.h"
 #include <stdint.h>
 
 int ncat(char filename[]) {
@@ -106,8 +107,27 @@ int startmode(char filename[]) {
                 call_singles(single, focus, filename);
             break;
             case _MULTIPLE:
-                fprintf(stdout, "multiple\n");
-                fprintf(stdout, "%s", multiple);
+                //fprintf(stdout, "multiple\n");
+                //fprintf(stdout, "%s", multiple);
+                switch(multiple[0]) {
+                    case 'l':
+                    case 'L':
+                        focus = call_L(multiple, focus);
+                    break;  
+                    case 'n':
+                    case 'N':
+                        call_N(multiple);
+                    break;
+                    case 'x':
+                    case 'X':
+                        call_X(multiple);
+                    break;
+                    case 'd':
+                    case 'D':
+                        call_D(multiple);
+                    break;
+                }
+
                 free(multiple);
             break;
             case _FAIL:
