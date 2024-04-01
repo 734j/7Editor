@@ -17,9 +17,17 @@ int check_L_linecount(uint64_t Flines, uint64_t focus) {
     return _VALID;
 }
 
-uint64_t call_L_plus_continue(char *multiple) {
+uint64_t call_L_plus_minus_continue(char *multiple) {
 
-    fprintf(stdout, "+ or - CONTINUE %s\n", multiple);
+    char new_multiple[32] = { '\0' };
+
+    int i = 0;
+    int j = 2;
+    for( ; multiple[j] != '\n' ; i++, j++) {
+        new_multiple[i] = multiple[j];
+    }
+
+    fprintf(stdout, "%s\n", new_multiple);
     return 0;
 }
 
@@ -91,7 +99,7 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
             focus = call_L_plus_minus_only(focus, multiple[1], Flines);
             return focus;
         }
-        call_L_plus_continue(multiple);
+        call_L_plus_minus_continue(multiple);
 
     }
 
