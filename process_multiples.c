@@ -27,7 +27,7 @@ uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m) {
     return _NA;
 }
 
-uint64_t call_L(char *multiple, uint64_t focus) {
+uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
 
     int imm = _IMM_NUMBER;
 

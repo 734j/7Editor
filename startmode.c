@@ -90,6 +90,7 @@ int call_singles(char single, uint64_t focus, char *filename) {
 
 int startmode(char filename[]) {
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
+    uint64_t Flines;
     int dnl = display_name_linecount(filename);
     if (dnl == 1) {
         return EXIT_FAILURE;
@@ -99,7 +100,10 @@ int startmode(char filename[]) {
     while (1) {
         char *multiple;
         char single;
-        int smode_input_ret = smode_input(&single, &multiple, focus);
+        int clif = count_lines_in_file(filename, Flines);
+        if (clif == )
+
+        int smode_input_ret = smode_input(&single, &multiple, focus, Flines);
 
         switch (smode_input_ret) {
 
