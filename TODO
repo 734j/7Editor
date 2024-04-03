@@ -1,4 +1,4 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - improve the length check. If i make the length of an input too big then it seems like the input after the fgets limit gets stuck in stdin and that is kind of a problem.
+1 - Finish L implementation 
