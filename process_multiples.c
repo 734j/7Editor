@@ -33,9 +33,10 @@ uint64_t call_L_plus_minus_continue(char *multiple) {
 
 uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
 
-    char buf[32] = { '\0' };
+    char buf[33] = { '\0' };
     fprintf(stdout, "(L): ");
-    fgets(buf, 30, stdin);
+    fgets(buf, 32, stdin);
+    if(check_length_fix_stdin(buf) == _FAIL) { return _FAIL; }
 
     if (buf[0] == '\n') {
         return focus;

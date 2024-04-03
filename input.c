@@ -8,6 +8,24 @@
 #include "i_validation.h"
 #include <stdint.h>
 
+int check_length_fix_stdin(char *smode_buf) {
+    
+    int sbl = 0;
+    for ( ; sbl < SMODE_MAX_INPUT_SIZE ; sbl++) {
+        if(smode_buf[sbl] == '\0' || smode_buf[sbl] == '\n') {
+            break;
+        }
+    }
+    if (sbl >= SMODE_MAX_INPUT_SIZE) {
+        char c;
+        while ((c = getchar()) != '\n');
+        //fprintf (stderr, "sbl > SMODE_MAX_SIZE\n");
+        return _FAIL;
+    }
+
+    return 0;
+}
+
 int smode_input(char *single, char **multiple, uint64_t focus) { // This function is for input then calls the appropriate validator 
 
     // char *single is for p, e, c, q, a
@@ -16,17 +34,7 @@ int smode_input(char *single, char **multiple, uint64_t focus) { // This functio
     char smode_buf[SMODE_MAX_SIZE] = { '\0' }; // Smode buffer
     fprintf(stdout, "(%lu): ", focus); // UI
     fgets(smode_buf, SMODE_MAX_SIZE, stdin); // Read user input
-    
-    int sbl = 0;
-    for ( ; sbl < SMODE_MAX_SIZE ; sbl++) {
-        if(smode_buf[sbl] == '\0') {
-            break;
-        }
-    }
-    if (sbl >= SMODE_MAX_INPUT_SIZE) {
-        fprintf(stderr, "sbl > SMODE_MAX_SIZE\n");
-        return _FAIL;
-    }
+    if(check_length_fix_stdin(smode_buf) == _FAIL) { return _FAIL; }
 
     switch (smode_buf[0]) {
                 // from L to D there will be the 'Multiple' options. In their respective cases i will check if the input is valid or not.

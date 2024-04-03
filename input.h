@@ -19,3 +19,4 @@
                     // _FAIL and _INVALID are sorta tied to eachother
 
 int smode_input(char *single, char **multiple, uint64_t focus);
+int check_length_fix_stdin(char *smode_buf);
