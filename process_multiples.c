@@ -11,7 +11,7 @@
 int check_L_linecount(uint64_t Flines, uint64_t focus) {
 
     if (focus < 1 || focus > Flines) {
-        fprintf(stderr, "check_L_linecount()\n");
+        fprintf(stdout, "?\n");
         return _INVALID;
     }
     return _VALID;
@@ -84,10 +84,10 @@ uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Fli
 
 uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
 
-    char buf[33] = { '\0' };
+    char buf[SMODE_MAX_SIZE] = { '\0' };
     fprintf(stdout, "(L): ");
-    fgets(buf, 32, stdin);
-    if(check_length_fix_stdin(buf) == _FAIL) { return _FAIL; }
+    fgets(buf, SMODE_MAX_SIZE, stdin);
+    if(check_length_fix_stdin(buf) == _FAIL) { return focus; return _FAIL; }
 
     if (buf[0] == '\n') {
         return focus;
@@ -157,7 +157,6 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
     }
 
     if (imm == _IMM_NUMBER) {
-        fprintf(stdout, "immediate\n");
         focus = call_L_immediate(multiple, focus, Flines);
         return focus;
     }

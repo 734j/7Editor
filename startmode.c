@@ -113,8 +113,6 @@ int startmode(char filename[]) {
                 call_singles(single, focus, filename);
             break;
             case _MULTIPLE:
-                //fprintf(stdout, "multiple\n");
-                //fprintf(stdout, "%s", multiple);
                 switch(multiple[0]) {
                     case 'l':
                     case 'L':
@@ -137,6 +135,8 @@ int startmode(char filename[]) {
                 free(multiple);
             break;
             case _FAIL:
+                extern int clfstdin_doubleprint;
+                if (clfstdin_doubleprint == 0) { break ;}
                 fprintf(stdout, "?\n");
             break;
             case _RETURN: // if user just preses 'return' button

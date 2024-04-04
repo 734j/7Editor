@@ -8,8 +8,10 @@
 #include "i_validation.h"
 #include <stdint.h>
 
+int clfstdin_doubleprint; // variable accessed via extern int in startmode so that it does not print '?' 2 times in a row
+
 int check_length_fix_stdin(char *smode_buf) {
-    
+
     int sbl = 0;
     for ( ; sbl < SMODE_MAX_INPUT_SIZE ; sbl++) {
         if(smode_buf[sbl] == '\0' || smode_buf[sbl] == '\n') {
@@ -19,7 +21,9 @@ int check_length_fix_stdin(char *smode_buf) {
     if (sbl >= SMODE_MAX_INPUT_SIZE) {
         char c;
         while ((c = getchar()) != '\n');
-        //fprintf (stderr, "sbl > SMODE_MAX_SIZE\n");
+        fprintf (stdout, "?\n");
+        clfstdin_doubleprint = 0;
+        //fprintf (stderr, "sbl > SMODE_MAX_SIZE\n"); // debug code
         return _FAIL;
     }
 
