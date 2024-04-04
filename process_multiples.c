@@ -17,6 +17,34 @@ int check_L_linecount(uint64_t Flines, uint64_t focus) {
     return _VALID;
 }
 
+uint64_t call_L_immediate(char *multiple, uint64_t focus, uint64_t Flines) {
+
+    char new_multiple[32] = { '\0' };
+
+    int i = 0;
+    int j = 1;
+    for( ; multiple[j] != '\n' ; i++, j++) {
+        new_multiple[i] = multiple[j];
+    }
+    
+    char *endptr;
+    uint64_t new_focus = strtol(new_multiple, &endptr, 10);
+    errno = 0;
+    if (errno == ERANGE) {
+        return focus;
+    }
+    if (endptr == new_multiple) {
+        return focus;
+    }
+    
+    if(check_L_linecount(Flines, new_focus) == _INVALID) {
+        return focus;
+    }
+
+    return new_focus;
+
+}
+
 uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Flines) {
 
     char new_multiple[32] = { '\0' };
@@ -130,6 +158,8 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
 
     if (imm == _IMM_NUMBER) {
         fprintf(stdout, "immediate\n");
+        focus = call_L_immediate(multiple, focus, Flines);
+        return focus;
     }
 
 
