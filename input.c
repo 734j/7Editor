@@ -12,6 +12,27 @@ int clfstdin_doubleprint = 1; // variable accessed via extern int in startmode s
 
 int check_length_fix_stdin(char *smode_buf) {
 
+    int not_newline = 1;
+    switch (smode_buf[0]) { // This whole thing just checks for 'single' inputs. The single inputs can ONLY and should only allow for single characters.
+        case 'p':
+        case 'P':
+        case 'e':
+        case 'E':
+        case 'c':
+        case 'C':
+        case 'q':
+        case 'Q':
+        case 'a':
+        case 'A':
+            if (smode_buf[1] != '\n') { // If not a new line 
+                not_newline = 0;
+                break;
+            } else {
+                return 0;
+            }
+        break;
+    }
+
     int sbl = 0;
     for ( ; sbl < SMODE_MAX_INPUT_SIZE ; sbl++) {
         if(smode_buf[sbl] == '\0' || smode_buf[sbl] == '\n') {
@@ -24,6 +45,10 @@ int check_length_fix_stdin(char *smode_buf) {
         fprintf (stdout, "?\n");
         clfstdin_doubleprint = 0;
         //fprintf (stderr, "sbl > SMODE_MAX_SIZE\n"); // debug code
+        return _FAIL;
+    }
+
+    if (not_newline == 0) {
         return _FAIL;
     }
 
