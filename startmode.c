@@ -9,6 +9,8 @@
 #include "process_multiples.h"
 #include <stdint.h>
 
+extern int clfstdin_doubleprint;
+
 int ncat(char filename[]) {
 
     FILE *file;
@@ -89,6 +91,7 @@ int call_singles(char single, uint64_t focus, char *filename) {
 }
 
 int startmode(char filename[]) {
+
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
     uint64_t Flines;
     int dnl = display_name_linecount(filename);
@@ -135,8 +138,11 @@ int startmode(char filename[]) {
                 free(multiple);
             break;
             case _FAIL:
-                extern int clfstdin_doubleprint;
-                if (clfstdin_doubleprint == 0) { break ;}
+
+                if (clfstdin_doubleprint == 0) { 
+                    clfstdin_doubleprint = 1;
+                    break; 
+                }
                 fprintf(stdout, "?\n");
             break;
             case _RETURN: // if user just preses 'return' button

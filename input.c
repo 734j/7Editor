@@ -8,7 +8,7 @@
 #include "i_validation.h"
 #include <stdint.h>
 
-int clfstdin_doubleprint; // variable accessed via extern int in startmode so that it does not print '?' 2 times in a row
+int clfstdin_doubleprint = 1; // variable accessed via extern int in startmode so that it does not print '?' 2 times in a row
 
 int check_length_fix_stdin(char *smode_buf) {
 
