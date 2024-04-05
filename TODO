@@ -1,6 +1,8 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
+1 - Think about how i want N to actually work
 1 - Implement N functionality.
+1 - Do tests on N
 2 - All L functionality is done. Did some testing and made some fixes. I will keep this here for now in case i find anything more.
 2 - Not really a TODO point but more of an observation and a realisation i have made. I could have just used regex to do the validation of my commands. How about that... Well im too far in (sunk cost fallacy or whatever its called).
