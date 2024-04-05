@@ -165,9 +165,33 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
     return focus;
 }
 
-int call_N(char *multiple) {
+uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
 
-    fprintf(stdout, "%s\n", multiple);
+    int imm = _IMM_NUMBER;
+
+    if (multiple[1] == '\n') { // N will add just 1 line.
+        imm = _NA;
+        new_line(filename, focus);
+        return 0;
+    }
+
+    if (multiple[1] == '+') { // N+ is the same as N. It will only add 1 line.
+        imm = _NA;
+        if (multiple[2] == '\n') {
+            new_line(filename, focus);
+            return 0;
+        }
+
+        // N plus continue. Still figuring out how this is gonna work.
+        return 0;
+    }
+
+    if (imm == _IMM_NUMBER) {
+        // N immediate, I will make its on function for it i think.
+        return 0;
+    }
+
+    fprintf(stdout, "%s %ld\n", multiple, Flines);
     return 0;
 }
 
