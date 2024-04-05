@@ -165,6 +165,36 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
     return focus;
 }
 
+int call_N_immediate(char *multiple, uint64_t Flines, char *filename) {
+    
+    char new_multiple[32] = { '\0' };
+
+    int i = 0;
+    int j = 1;
+    for( ; multiple[j] != '\n' ; i++, j++) {
+        new_multiple[i] = multiple[j];
+    }
+    
+    char *endptr;
+    uint64_t newline_insert_position = strtol(new_multiple, &endptr, 10);
+    errno = 0;
+    if (errno == ERANGE) {
+        return 0;
+    }
+    if (endptr == new_multiple) {
+        return 0;
+    }
+    
+    if(check_L_linecount(Flines, newline_insert_position) == _INVALID) {
+        return -1;
+    }
+
+    new_line(filename, newline_insert_position);
+
+    return 0;
+
+}
+
 uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
 
     int imm = _IMM_NUMBER;
@@ -187,7 +217,7 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
     }
 
     if (imm == _IMM_NUMBER) {
-        // N immediate, I will make its on function for it i think.
+        call_N_immediate(multiple, Flines, filename);
         return 0;
     }
 

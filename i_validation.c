@@ -75,7 +75,7 @@ _NA (None of these cases)
 
 }
 
-int validate_check_imm(char *smode_buf) { // check immediately for \n, 0 or numbers
+int validate_check_imm(char *smode_buf, int mode) { // check immediately for \n, 0 or numbers
 /*
 _INVALID (immediately stop validating and return invalid to everything)
 _IMM_NOTHING == _VALID(valid)
@@ -88,8 +88,12 @@ _IMM_NUMBER (number immediately after L or N or whatever)
     if (smode_buf[1] == '\n') {
         return _IMM_NOTHING;
     }
-    if (smode_buf[1] == '0') {
-        return _INVALID; 
+    if (smode_buf[1] == '0') { // If we are on MODE_N then it has to allow '0' and thus we call it valid.
+        if (mode == MODE_N) {  // It will keep validating this in validate_imm_numbers.
+            return _IMM_NUMBER;
+        } else {
+            return _INVALID; 
+        }
     }
 
     for (int j = 0 ; j < 9 ; j++) { // Check if its just a number after
@@ -115,7 +119,6 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
     //Start at 2
     for (int i = 2 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                             // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
-        
         for (int j = 0 ; j < 10 ; j++) {
             
             if (smode_buf[i] == '\n') {
@@ -137,11 +140,21 @@ int validate_plus_continue(char *smode_buf) { // if vcpm returns _PLUS_CONTINUE 
 
 }
 
-int validate_imm_numbers(char *smode_buf) {
+int validate_imm_numbers(char *smode_buf, int mode) {
 
     // Validate after L when its clear that there are only numbers
     char nums_with_zero[] = "0123456789";
     int kflag = _INVALID;
+
+    if (mode == MODE_N && smode_buf[1] == '0') { // Because we are on MODE_N this runs to check if there is anything after N0. We will only allow newline characters because that means theres ONLY 'N0*
+        printf("vimmn mode N\n");
+        if (smode_buf[2] == '\n') {
+            return _VALID;
+        } else {
+            return _INVALID; // If there is anything else then it just exits.
+        }
+    }
+
     //Start at 1
     for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
                                             // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
@@ -195,7 +208,7 @@ int validate_LN(char *smode_buf, int mode) {
 
     if (vcimm == TRUE_7ED) { // This is where L0 is caught
         //printf("vcimm start\n");
-        int vcimm_result = validate_check_imm(smode_buf);
+        int vcimm_result = validate_check_imm(smode_buf, mode);
         int imm_number = FALSE_7ED;
         switch(vcimm_result) {
             case _IMM_NUMBER:
@@ -217,7 +230,7 @@ int validate_LN(char *smode_buf, int mode) {
         }
         if (imm_number == TRUE_7ED) {
             //printf("vimmn start\n");
-            int vimmn_result = validate_imm_numbers(smode_buf);
+            int vimmn_result = validate_imm_numbers(smode_buf, mode);
             switch(vimmn_result) {
                 case _VALID:
                     //printf("valid\n");

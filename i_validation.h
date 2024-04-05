@@ -16,11 +16,11 @@
 #define MODE_L 76 // MODE_L works for Commands with + and -
 #define MODE_N 78 // MODE_N works for Commands with + only
 
-int validate_imm_numbers(char *smode_buf);
+int validate_imm_numbers(char *smode_buf, int mode);
 
 int validate_check_p_m(char *smode_buf, int mode);
 
-int validate_check_imm(char *smode_buf);
+int validate_check_imm(char *smode_buf, int mode);
 
 int validate_plus_continue(char *smode_buf);
 
