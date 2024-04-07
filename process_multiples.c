@@ -201,6 +201,40 @@ int call_N_immediate(char *multiple, uint64_t Flines, char *filename) {
 
 }
 
+int call_N_plus_continue(char *multiple, uint64_t focus, char *filename) {
+
+    char new_multiple[32] = { '\0' };
+
+    int choice_yesno = 0;
+    int i = 0;
+    int j = 2;
+    for( ; multiple[j] != '\n' ; i++, j++) {
+        new_multiple[i] = multiple[j];
+    }
+    
+    char *endptr;
+    uint64_t newlines_to_add = strtol(new_multiple, &endptr, 10);
+    errno = 0;
+    if (errno == ERANGE) {
+        return -1;
+    }
+    if (endptr == new_multiple) {
+        return -1;
+    }
+    
+    if (newlines_to_add > 1) {
+        choice_yesno = choice();
+    }
+    if (choice_yesno == 1) { return -1; }
+    
+    for(uint64_t count = 0 ; count < newlines_to_add ; count++) { // This is very inefficient if you are adding thousands of lines but why would you wanna do that anyway?
+        new_line(filename, focus);
+    }
+
+    return 0;
+
+}
+
 uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
 
     int imm = _IMM_NUMBER;
@@ -219,6 +253,7 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
         }
 
         // N plus continue. Still figuring out how this is gonna work.
+        call_N_plus_continue(multiple, focus, filename);
         return 0;
     }
 

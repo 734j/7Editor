@@ -119,11 +119,11 @@ int startmode(char filename[]) {
                 switch(multiple[0]) {
                     case 'l':
                     case 'L':
-                        focus = call_L(multiple, focus, Flines);
+                        focus = call_L(multiple, focus, Flines); // implemented
                     break;  
                     case 'n':
                     case 'N':
-                        call_N(multiple, focus, Flines, filename);
+                        call_N(multiple, focus, Flines, filename); // Implemented
                     break;
                     case 'x':
                     case 'X':
