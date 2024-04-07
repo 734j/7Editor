@@ -147,7 +147,7 @@ int validate_imm_numbers(char *smode_buf, int mode) {
     int kflag = _INVALID;
 
     if (mode == MODE_N && smode_buf[1] == '0') { // Because we are on MODE_N this runs to check if there is anything after N0. We will only allow newline characters because that means theres ONLY 'N0*
-        printf("vimmn mode N\n");
+    
         if (smode_buf[2] == '\n') {
             return _VALID;
         } else {

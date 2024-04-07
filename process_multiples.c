@@ -8,7 +8,13 @@
 #include "i_validation.h"
 #include <stdint.h>
 
-int check_L_linecount(uint64_t Flines, uint64_t focus) {
+int check_L_linecount(uint64_t Flines, uint64_t focus, int mode) {
+
+    if (mode == MODE_N) { // Last check that allows for N0 to work.
+        if (focus == 0) {
+            return _VALID;
+        }
+    }
 
     if (focus < 1 || focus > Flines) {
         fprintf(stdout, "?\n");
@@ -37,7 +43,7 @@ uint64_t call_L_immediate(char *multiple, uint64_t focus, uint64_t Flines) {
         return focus;
     }
     
-    if(check_L_linecount(Flines, new_focus) == _INVALID) {
+    if(check_L_linecount(Flines, new_focus, MODE_L) == _INVALID) {
         return focus;
     }
 
@@ -75,7 +81,7 @@ uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Fli
             new_focus = focus-new_focus;
         }
     }
-    if(check_L_linecount(Flines, new_focus) == _INVALID) {
+    if(check_L_linecount(Flines, new_focus, MODE_L) == _INVALID) {
         return focus;
     }
 
@@ -106,7 +112,7 @@ uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
         return focus;
     }
 
-    int cll = check_L_linecount(Flines, new_focus);
+    int cll = check_L_linecount(Flines, new_focus, MODE_L);
     if (cll == _INVALID) {
         return focus;
     }
@@ -117,14 +123,14 @@ uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
 uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) {
     switch (p_or_m) {
         case '+': {
-            int cll = check_L_linecount(Flines, focus+1);
+            int cll = check_L_linecount(Flines, focus+1, MODE_L);
             if (cll == _INVALID) {
                 return focus;
             }
             return focus+1;
         break; }
         case '-': {
-            int cll = check_L_linecount(Flines, focus-1);
+            int cll = check_L_linecount(Flines, focus-1, MODE_L);
             if (cll == _INVALID) {
                 return focus;
             }
@@ -185,7 +191,7 @@ int call_N_immediate(char *multiple, uint64_t Flines, char *filename) {
         return 0;
     }
     
-    if(check_L_linecount(Flines, newline_insert_position) == _INVALID) {
+    if(check_L_linecount(Flines, newline_insert_position, MODE_N) == _INVALID) {
         return -1;
     }
 
