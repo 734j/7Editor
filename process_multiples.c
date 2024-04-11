@@ -266,7 +266,33 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
     return 0;
 }
 
-int call_X(char *multiple) {
+int call_X(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
+    
+    int imm = _IMM_NUMBER;
+
+    if (multiple[1] == '\n') { // X Will remove current line
+        imm = _NA;
+        remove_line_contents(filename, focus);
+        return 0;
+    }
+
+    if (multiple[1] == '+') { // X+ Will..... idk
+        imm = _NA;
+        if (multiple[2] == '\n') {
+            // Will have to really think about this
+            return 0;
+        }
+
+        // X plus continue. Still figuring out how this is gonna work.
+
+        return 0;
+    }
+
+    if (imm == _IMM_NUMBER) {
+        // X immediate, process immediates
+        
+        return 0;
+    }
 
     fprintf(stdout, "%s\n", multiple);
     return 0;
