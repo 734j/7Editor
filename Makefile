@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS_TESTBIN=-O3 -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS_TESTBIN=-O2 -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
 CFLAGS=-O2 -flto -march=native -DNDEBUG -fomit-frame-pointer -s -static
 TARGET=7ed
 TESTTARGET=7ed-TESTING

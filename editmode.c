@@ -149,9 +149,9 @@ int check_end_newline(char filename[]) { // function that checks if a file ends 
 
 }
 
-int new_line(char filename[], long new_line_pos_temp) { // creates a new line within a file after a specified line number
+int new_line(char filename[], long long new_line_pos_temp) { // creates a new line within a file after a specified line number
 
-        long new_line_pos;
+        long long new_line_pos;
         if (new_line_pos_temp < 0) {
             fprintf(stderr, "The new line can not be under 0!\n");
             return 1;
@@ -203,7 +203,7 @@ int new_line(char filename[], long new_line_pos_temp) { // creates a new line wi
 
 }
 
-int remove_line_contents(char filename[], long focus) { // removes contents of a specified line without removing the newline
+int remove_line_contents(char *filename, uint64_t focus) { // removes contents of a specified line without removing the newline
 
     char *line;
     size_t start;
