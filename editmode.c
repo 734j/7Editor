@@ -226,6 +226,25 @@ int remove_line_contents(char *filename, uint64_t focus) { // removes contents o
 
 }
 
+int remove_line_contents_and_newline(char *filename, uint64_t focus) {
+
+    int increment = 0;
+    if (focus == 1) { // checks if its line 1. This is so that we can remove the newline properly.
+        increment++;
+    }
+    int rlc = remove_line_contents(filename, focus);
+    if (rlc == 1) {
+        return 1;
+    }
+
+    int dsn = delete_specified_newline(filename, focus+increment);
+    if (dsn == 1) {
+        return 1;
+    }
+
+    return 0;
+}
+
 int editmode(char filename[], uint64_t focus) { // the editing interface
 
     char *line;
@@ -252,7 +271,6 @@ int editmode(char filename[], uint64_t focus) { // the editing interface
             return 0;
         }
 
-        fprintf(stdout, "Do you want to write the changes?\n");
         int yesno = choice();
 
         if (yesno == 1) {

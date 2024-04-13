@@ -127,11 +127,11 @@ int startmode(char filename[]) {
                     break;
                     case 'x':
                     case 'X':
-                        call_X(multiple);
+                        call_X(multiple, focus, Flines, filename); 
                     break;
                     case 'd':
                     case 'D':
-                        call_D(multiple);
+                        focus = call_D(multiple, focus, Flines, filename);
                     break;
                 }
 

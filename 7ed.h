@@ -33,3 +33,5 @@ int new_line(char filename[], long long new_line_pos_temp);
 int remove_line_contents(char filename[], uint64_t focus);
 
 int delete_specified_newline(char filename[], long focus);
+
+int remove_line_contents_and_newline(char *filename, uint64_t focus);
