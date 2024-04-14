@@ -378,29 +378,68 @@ uint64_t call_D_plus_continue(char *multiple, uint64_t focus, uint64_t Flines, c
     uint64_t lines_and_newlines_to_remove = strtol(new_multiple, &endptr, 10);
     errno = 0;
     if (errno == ERANGE) {
-        return -1;
+        return focus;
     }
     if (endptr == new_multiple) {
-        return -1;
+        return focus;
     }
 
     if(check_L_linecount(Flines, focus+(lines_and_newlines_to_remove-1) /*-1 because we are not doing currentline + amount of lines. That would be 1 too much*/, MODE_L) == _INVALID) {
-        return -1; 
+        return focus; 
     }
 
-    if (choice() == 1) { return -1; }
+    if (choice() == 1) { return focus; }
 
-    for(uint64_t count = 0 ; count < lines_and_newlines_to_remove ; count++) { // This is very inefficient if you are adding thousands of lines but why would you wanna do that anyway?
+    for(uint64_t count = 0 ; count < lines_and_newlines_to_remove ; count++) { // This is very inefficient
         remove_line_contents_and_newline(filename, focus);
     }
 
-    return 0;
+    return focus-lines_and_newlines_to_remove;
 
+}
+
+uint64_t call_D_immediate(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
+    
+    char new_multiple[32] = { '\0' };
+
+    int i = 0;
+    int j = 1;
+    for( ; multiple[j] != '\n' ; i++, j++) {
+        new_multiple[i] = multiple[j];
+    }
+    
+    char *endptr;
+    uint64_t remove_line_and_newline_position = strtol(new_multiple, &endptr, 10);
+    errno = 0;
+    if (errno == ERANGE) {
+        return focus;
+    }
+    if (endptr == new_multiple) {
+        return focus;
+    }
+    
+    if(check_L_linecount(Flines, remove_line_and_newline_position, MODE_L) == _INVALID) {
+        return focus;
+    }
+
+    if (choice() == 1) { return focus; }    
+
+    remove_line_contents_and_newline(filename, remove_line_and_newline_position);
+    if (focus == 1 && remove_line_and_newline_position == 1) {
+        return 1;
+    }
+
+    if (focus == remove_line_and_newline_position) {
+        return focus-1;
+    }
+
+    return focus;
 }
 
 uint64_t call_D(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
 
     int imm = _IMM_NUMBER;
+    uint64_t original_focus = focus;
 
     if (multiple[1] == '\n') { // D Will remove current line
         imm = _NA;
@@ -426,17 +465,17 @@ uint64_t call_D(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
                 return focus;
             }
         }
-        // call_D_plus_continue
-
-        return 0;
+        focus = call_D_plus_continue(multiple, focus, Flines, filename);
+        if (original_focus == 1) { return 1; }
+        return focus;
     }
 
     if (imm == _IMM_NUMBER) {
-        //call_D_immediate(multiple, Flines, filename);
-        return 0;
+        uint64_t calldimmediate; 
+        calldimmediate = call_D_immediate(multiple, focus, Flines, filename);
+        return calldimmediate;
     }
 
-    fprintf(stdout, "%s %ld\n", multiple, Flines);
     return 0;
 }
 
