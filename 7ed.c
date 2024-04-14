@@ -30,6 +30,24 @@
               "    N   Create a newline on the line after focus\n"\
               "    X   Remove all contents of a line except the newline itself\n"\
               "    D   Remove all contents of a line including the newline itself\n"\
+              "    \n"\
+              "It is possible to use some of these commands along wih numbers and '+' or '-'.\n"\
+              "Commands that support this functionality: L, N, X, D\n"\
+              "VALID EXAMPLES:\n"\
+              "    \n"\
+              "    'L+' Would increment the line focus by 1. If you were to put a '-' then it would decrement.\n"\
+              "    'L10' Would change the focus to line number 10.\n"\
+              "    'L+10 Would increment the line focus by 10. If you were to put a '-' then it would decrement by 10.\n"\
+              "    'N', 'N+', 'N+1' Are all valid but do the same thing.\n"\
+              "    'N+10' Would add 10 more lines.\n"\
+              "    'N10 Would add a line after line 10.'\n"\
+              "    'X', 'X+', 'X+1' Are all valid but do the same thing. \n"\
+              "    'X10' Would remove the contents of line 10.\n"\
+              "    'X+10' Would remove the contents of the current line including the next 9 lines.\n"\
+              "    'D', 'D+', 'D+1' Are all valid but do the same thing. \n"\
+              "    'D10' Would remove line 10 entirely.\n"\
+              "    'D+10' Would remove the current line entirely as well as entirely remove the next 9 lines.\n"\
+              "    \n"\
 
 
 #define PROGRAM_NAME "7ed"

@@ -8,9 +8,9 @@
 #include "i_validation.h"
 #include <stdint.h>
 
-int check_L_linecount(uint64_t Flines, uint64_t focus, int mode) {
-
-    if (mode == MODE_N) { // Last check that allows for N0 to work.
+int check_L_linecount(uint64_t Flines, uint64_t focus, int mode) { // Check if you are trying to modify or move to lines under 1 or lines that are over the total amount of lines in the file.
+                                                                    // Mode N allows us to go to line 0 because N needs it.
+    if (mode == MODE_N) { 
         if (focus == 0) {
             return _VALID;
         }
@@ -23,7 +23,7 @@ int check_L_linecount(uint64_t Flines, uint64_t focus, int mode) {
     return _VALID;
 }
 
-uint64_t call_L_immediate(char *multiple, uint64_t focus, uint64_t Flines) {
+uint64_t call_L_immediate(char *multiple, uint64_t focus, uint64_t Flines) { // Go to a specific newline
 
     char new_multiple[32] = { '\0' };
 
@@ -51,7 +51,7 @@ uint64_t call_L_immediate(char *multiple, uint64_t focus, uint64_t Flines) {
 
 }
 
-uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Flines) {
+uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Flines) { // Go up or down a number of lines
 
     char new_multiple[32] = { '\0' };
 
@@ -88,7 +88,7 @@ uint64_t call_L_plus_minus_continue(char *multiple, uint64_t focus, uint64_t Fli
     return new_focus;
 }
 
-uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
+uint64_t call_L_only(uint64_t focus, uint64_t Flines) { // Old L functionality.
 
     char buf[SMODE_MAX_SIZE] = { '\0' };
     fprintf(stdout, "(L): ");
@@ -120,7 +120,7 @@ uint64_t call_L_only(uint64_t focus, uint64_t Flines) {
     return new_focus;
 }
 
-uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) {
+uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) { // Go up or down by only 1
     switch (p_or_m) {
         case '+': {
             int cll = check_L_linecount(Flines, focus+1, MODE_L);
@@ -141,7 +141,7 @@ uint64_t call_L_plus_minus_only(uint64_t focus, char p_or_m, uint64_t Flines) {
     return _NA;
 }
 
-uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
+uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) { // Main L function to decide what to do.
 
     int imm = _IMM_NUMBER;
 
@@ -171,7 +171,7 @@ uint64_t call_L(char *multiple, uint64_t focus, uint64_t Flines) {
     return focus;
 }
 
-int call_N_immediate(char *multiple, uint64_t Flines, char *filename) {
+int call_N_immediate(char *multiple, uint64_t Flines, char *filename) { 
     
     char new_multiple[32] = { '\0' };
 
@@ -252,7 +252,6 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
             return 0;
         }
 
-        // N plus continue. Still figuring out how this is gonna work.
         call_N_plus_continue(multiple, focus, filename);
         return 0;
     }
@@ -266,7 +265,7 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
     return 0;
 }
 
-int call_X_plus_continue(char *multiple, uint64_t focus, char *filename, uint64_t Flines) { // NOT DONE!! IT IS A COPY OF call_N_plus_continue !!!
+int call_X_plus_continue(char *multiple, uint64_t focus, char *filename, uint64_t Flines) {
 
     char new_multiple[32] = { '\0' };
 
@@ -292,7 +291,7 @@ int call_X_plus_continue(char *multiple, uint64_t focus, char *filename, uint64_
 
     if (choice() == 1) { return -1; }
 
-    for(uint64_t count = 0 ; count < amount_of_lines_to_remove ; count++) { // This is very inefficient if you are adding thousands of lines but why would you wanna do that anyway?
+    for(uint64_t count = 0 ; count < amount_of_lines_to_remove ; count++) { // This is very inefficient
         remove_line_contents(filename, focus+count);
     }
 

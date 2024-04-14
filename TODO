@@ -1,9 +1,7 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - Remove testing code, add comments for future me.
-1 - Perform full test of the whole program
-1 - Re-write USAGE
+1 - Perform full test of the whole program. (I already found a major bug)
 2 - Re-write Makefile to make it easier
 2 - Add some quality of life features
 3 - Re-write new_line and remove_line_contents for better performance. (They are very inefficient)

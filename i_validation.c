@@ -8,16 +8,8 @@
 #include "input.h"
 #include <stdint.h>
 
-// This will be the new input system for combining commands with line numbers
-// Work in progress and far from finished. This is not included when compiling normally.
-
 int validate_check_p_m(char *smode_buf, int mode) { // Check for +, -, +0, -0, +\n, or -\n
-/*
-_INVALID (immediately stop validating and return invalid to everything)
-_PLUS_ONLY (L+ only. Immediately valid. Return)
-_PLUS_CONTINUE (L+ And more numbers after it. Will make validate_plus_continue run)
-_NA (None of these cases)
-*/
+
     char nums[] = "123456789";
     int iflag = _INVALID;
 
@@ -76,12 +68,7 @@ _NA (None of these cases)
 }
 
 int validate_check_imm(char *smode_buf, int mode) { // check immediately for \n, 0 or numbers
-/*
-_INVALID (immediately stop validating and return invalid to everything)
-_IMM_NOTHING == _VALID(valid)
-_NA (None of these cases)
-_IMM_NUMBER (number immediately after L or N or whatever)
-*/
+
     char nums[] = "123456789";
     int iflag = _INVALID;
 
@@ -157,7 +144,7 @@ int validate_imm_numbers(char *smode_buf, int mode) {
 
     //Start at 1
     for (int i = 1 ; i < SMODE_MAX_INPUT_SIZE ; i++) {
-                                            // Nested loop to check every element in nums_with_zero on the current smode element (i)(outer loop)
+
         for (int j = 0 ; j < 10 ; j++) {
             
             if (smode_buf[i] == '\n') {
@@ -181,7 +168,7 @@ int validate_imm_numbers(char *smode_buf, int mode) {
 int validate_LN(char *smode_buf, int mode) {
 
     // this is still a huge function, validating strings is complicated....
-    // although i will admit that the code is overall just so much easier to work with. Still happy that i fixed that.
+    // though i will admit that the code is overall just so much easier to work with. Still happy that i fixed that.
 
     int vcpm_result = validate_check_p_m(smode_buf, mode);
 
@@ -189,59 +176,47 @@ int validate_LN(char *smode_buf, int mode) {
     int plus_continue = TRUE_7ED;
     switch(vcpm_result) {
         case _PLUS_ONLY:
-            //printf("PLUS ONLY\n");
             return _VALID;
         break;
         case _PLUS_CONTINUE:
-            //printf("PLUS CONTINUE\n");
+
         break;
         case _INVALID:
-            //printf("INVALID\n");
             return _INVALID;
         break;
         case _NA:
-            //printf("NA\n");
             vcimm = TRUE_7ED;
             plus_continue = FALSE_7ED;
         break;
     }
 
     if (vcimm == TRUE_7ED) { // This is where L0 is caught
-        //printf("vcimm start\n");
         int vcimm_result = validate_check_imm(smode_buf, mode);
         int imm_number = FALSE_7ED;
         switch(vcimm_result) {
             case _IMM_NUMBER:
-                //printf("imm number\n");
                 imm_number = TRUE_7ED;
             break;
             case _VALID:
-                //printf("valid\n");
                 return _VALID;
             break;
             case _INVALID:
-                //printf("invalid\n");
                 return _INVALID;
             break;
             case _NA:
-                //printf("NA\n");
                 return _INVALID;
             break;
         }
         if (imm_number == TRUE_7ED) {
-            //printf("vimmn start\n");
             int vimmn_result = validate_imm_numbers(smode_buf, mode);
             switch(vimmn_result) {
                 case _VALID:
-                    //printf("valid\n");
                     return _VALID;
                 break;
                 case _INVALID:
-                    //printf("invalid\n");
                     return _INVALID;
                 break;
                 case _NA:
-                    //printf("NA\n");
                     return _INVALID;
                 break;
             }
@@ -251,19 +226,15 @@ int validate_LN(char *smode_buf, int mode) {
 
     if (plus_continue == TRUE_7ED) {
 
-        //printf("validate plus continue \n");
         int vpct_result = validate_plus_continue(smode_buf);
         switch(vpct_result) {
             case _VALID:
-                //printf("valid\n");
                 return _VALID;
             break;
             case _INVALID:
-                //printf("invalid\n");
                 return _INVALID;
             break;
             case _NA:
-                //printf("NA\n");
                 return _INVALID;
             break;
 
