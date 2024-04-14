@@ -6,7 +6,7 @@
 #include "input.h"
 #include <stdint.h>
 
-#define VERSION 1
+#define VERSION 2
 #define USAGE "7ed [OPTION] [FILENAME]\n" \
               "\nVALID COMMAND-LINE OPTIONS:\n\n"\
               "    -v   Prints out the version number\n"\

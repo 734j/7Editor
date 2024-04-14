@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS_TESTBIN=-O3 -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address
-CFLAGS=-O2 -flto -march=native -DNDEBUG -fomit-frame-pointer -s -static
+CFLAGS_TESTBIN=-O3 -Wfatal-errors -Wall -Werror -Wextra -g -fsanitize=address -Wpedantic -std=gnu11
+CFLAGS=-O3 -flto -march=native -DNDEBUG -fomit-frame-pointer -s -static -std=gnu11
 TARGET=7ed
 TESTTARGET=7ed-TESTING
 INSTALL_DIRECTORY=/usr/local/bin
@@ -24,6 +24,6 @@ install:
 	echo "$(TARGET) was installed to $(INSTALL_DIRECTORY)"
 
 release:
-	echo "CC 7ed.c functions.c startmode.c editmode.c ---> $(TARGET)"
-	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c -o $(TARGET)
+	echo "CC 7ed.c functions.c startmode.c editmode.c i_validation.c process_multiples.c ---> $(TARGET)"
+	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c input.c i_validation.c process_multiples.c -o $(TARGET)
 	echo "$(TARGET) is done."

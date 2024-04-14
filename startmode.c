@@ -46,7 +46,7 @@ int call_singles(char single, uint64_t focus, char *filename) {
 
     switch(single) {
         case 'p':
-        case 'P':
+        case 'P': {
 
             char *line;
             size_t start;
@@ -57,7 +57,7 @@ int call_singles(char single, uint64_t focus, char *filename) {
             fprintf(stdout, "%s", line);
             free(line);
 
-        break;
+        break; }
         case 'e':
         case 'E':
 
@@ -65,14 +65,14 @@ int call_singles(char single, uint64_t focus, char *filename) {
             
         break;
         case 'c':
-        case 'C':
+        case 'C': {
 
             int dnl = display_name_linecount(filename);
             if (dnl == 1) {
                 return EXIT_FAILURE;
             }
 
-        break;
+        break; }
         case 'q':
         case 'Q':
 
