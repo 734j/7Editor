@@ -267,7 +267,7 @@ int editmode(char filename[], uint64_t focus) { // the editing interface
 	}
 
         if (editbuffer[0] == '\n') { 
-            fprintf(stdout, "No changes\n");
+            // No changes
             return 0;
         }
 

@@ -393,7 +393,7 @@ uint64_t call_D_plus_continue(char *multiple, uint64_t focus, uint64_t Flines, c
         remove_line_contents_and_newline(filename, focus);
     }
 
-    return focus-lines_and_newlines_to_remove;
+    return focus-1;
 
 }
 
