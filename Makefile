@@ -5,6 +5,7 @@ TARGET=7ed
 TESTTARGET=7ed-TESTING
 INSTALL_DIRECTORY=/usr/local/bin
 MAKEFLAGS += -s
+SRCS=7ed.c functions.c startmode.c editmode.c input.c i_validation.c process_multiples.c
 
 all: release
 clean:
@@ -17,7 +18,7 @@ clean:
 
 tests:
 	echo "CC 7ed.c functions.c startmode.c editmode.c i_validation.c process_multiples.c ---> test/$(TESTTARGET)"
-	$(CC) $(CFLAGS_TESTBIN) 7ed.c functions.c startmode.c editmode.c input.c i_validation.c process_multiples.c -o test/$(TESTTARGET)
+	$(CC) $(CFLAGS_TESTBIN) $(SRCS) -o test/$(TESTTARGET)
 
 install:
 	cp $(TARGET) $(INSTALL_DIRECTORY)
@@ -25,5 +26,5 @@ install:
 
 release:
 	echo "CC 7ed.c functions.c startmode.c editmode.c i_validation.c process_multiples.c ---> $(TARGET)"
-	$(CC) $(CFLAGS) 7ed.c functions.c startmode.c editmode.c input.c i_validation.c process_multiples.c -o $(TARGET)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
 	echo "$(TARGET) is done."
