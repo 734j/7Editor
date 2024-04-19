@@ -47,8 +47,7 @@
               "    'D', 'D+', 'D+1' Are all valid but do the same thing. \n"\
               "    'D10' Would remove line 10 entirely.\n"\
               "    'D+10' Would remove the current line entirely as well as entirely remove the next 9 lines.\n"\
-              "    \n"\
-
+            
 
 #define PROGRAM_NAME "7ed"
 

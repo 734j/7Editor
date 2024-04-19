@@ -6,3 +6,6 @@ General things to test:
 - Most basic usage of COMMANDS
 - Use commands with + and numbers. 
 - See how the program handles permissions
+- If theres a way to test this that isnt outlined in the points then i will do
+  that too obviously
+- Perform tests on both 7ed-TESTING binary as well as release (7ed) binary.
