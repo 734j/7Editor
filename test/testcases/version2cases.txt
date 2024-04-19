@@ -1,0 +1,8 @@
+Not gonna make any test cases. The plan right now is to go through ALL
+functionality with an exploratory type of testing. 
+
+General things to test:
+- Entry to the program -v and -i 
+- Most basic usage of COMMANDS
+- Use commands with + and numbers. 
+- See how the program handles permissions
