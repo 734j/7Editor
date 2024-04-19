@@ -12,6 +12,9 @@
 #define TRUE_7ED 0
 #define FALSE_7ED 1
 
+#define FILE_EXISTS 0
+#define FILE_NOT_FOUND 1
+
 int count_lines_in_file(char filename[], uint64_t *lines);
 
 int count_lines_in_file_posix(char filename[], size_t *lines);

@@ -261,7 +261,6 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
         return 0;
     }
 
-    fprintf(stdout, "%s %ld\n", multiple, Flines);
     return 0;
 }
 

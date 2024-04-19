@@ -6,6 +6,8 @@
 #include "7ed.h"
 #include <stdint.h>
 
+extern uint8_t new;
+
 int delete_specified_newline(char filename[], long focus) { // special version of write_line that does as the name says
 
     char *line;
@@ -277,6 +279,7 @@ int editmode(char filename[], uint64_t focus) { // the editing interface
             return 0;
         }
         
+        new = 0;
         size_t editbuffer_size = strlen(editbuffer);
         write_line(filename, focus, editbuffer, editbuffer_size);
 

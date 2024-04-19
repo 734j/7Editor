@@ -10,6 +10,7 @@
 #include <stdint.h>
 
 extern int clfstdin_doubleprint;
+uint8_t new = 0;
 
 int ncat(char filename[]) {
 
@@ -67,6 +68,7 @@ int call_singles(char single, uint64_t focus, char *filename) {
         case 'c':
         case 'C': {
 
+            if (new == 1) { fprintf(stdout, "[NEW] "); }
             int dnl = display_name_linecount(filename);
             if (dnl == 1) {
                 return EXIT_FAILURE;
@@ -76,6 +78,10 @@ int call_singles(char single, uint64_t focus, char *filename) {
         case 'q':
         case 'Q':
 
+            if (new == 1) {
+                //fprintf(stdout, "no change, remove\n");
+                remove(filename);
+            }
             exit(EXIT_SUCCESS);
 
         break;
@@ -90,10 +96,37 @@ int call_singles(char single, uint64_t focus, char *filename) {
     return 0;
 }
 
+uint8_t check_if_file_exists(char *filename) { // If the file exists then do nothing. If it does not exist then make it.
+    
+    FILE *file;
+    file = fopen(filename,"r"); // Open file
+    if (file == NULL) {
+        return FILE_NOT_FOUND;
+    }
+
+    fclose(file);
+    return FILE_EXISTS;
+}
+
+int fe_stop = 0;
+
 int startmode(char filename[]) {
 
+    uint8_t file_existence = check_if_file_exists(filename);
+    if (fe_stop == 0) {
+        if (file_existence == FILE_NOT_FOUND) {
+            //fprintf(stdout, "filenotfound\n");
+            new = 1;
+            fe_stop = 1;
+            FILE *file = fopen(filename, "w");
+            fclose(file);
+        }
+    }
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
     uint64_t Flines;
+
+    if (new == 1) { fprintf(stdout, "[NEW] "); }
+
     int dnl = display_name_linecount(filename);
     if (dnl == 1) {
         return EXIT_FAILURE;
@@ -123,11 +156,15 @@ int startmode(char filename[]) {
                     break;  
                     case 'n':
                     case 'N':
-                        call_N(multiple, focus, Flines, filename); 
+                        if(call_N(multiple, focus, Flines, filename) == 0) {
+                            new = 0;
+                        }
                     break;
                     case 'x':
                     case 'X':
-                        call_X(multiple, focus, Flines, filename); 
+                        
+                        call_X(multiple, focus, Flines, filename);
+
                     break;
                     case 'd':
                     case 'D':
