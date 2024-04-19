@@ -51,6 +51,8 @@
 
 #define PROGRAM_NAME "7ed"
 
+uint8_t g_choicemode = MODE_NORMAL;
+
 int main (int argc, char *argv[]) {
 
     if (argc == 1) {
@@ -60,11 +62,13 @@ int main (int argc, char *argv[]) {
 
     int i_used = FALSE_7ED; // These flags are to make sure -v and -i dont get used together. It makes the program feel a bit nicer.
     int v_used = FALSE_7ED;
+    int y_used = FALSE_7ED;
+    int n_used = FALSE_7ED;
 
     int opt;
     int returnval;
     char *optarg_copy = NULL; // We will copy optarg to this
-    while ((opt = getopt(argc, argv, "i:v")) != -1) {
+    while ((opt = getopt(argc, argv, "i:vyn")) != -1) {
         switch (opt) {
         case 'i':
 
@@ -76,6 +80,17 @@ int main (int argc, char *argv[]) {
         case 'v':
 
             v_used = TRUE_7ED;
+
+        break;
+        case 'y':
+
+            y_used = TRUE_7ED;
+
+        break;
+        case 'n':
+
+            n_used = TRUE_7ED;
+
         break;
 
         }
@@ -85,8 +100,18 @@ int main (int argc, char *argv[]) {
         fprintf(stderr, "%s", USAGE);
         return EXIT_FAILURE;
     }
+
+    if (n_used == TRUE_7ED && y_used == TRUE_7ED) { // If both YES and NO are used print usage and exit
+        free(optarg_copy);
+        fprintf(stderr, "%s", USAGE);
+        return EXIT_FAILURE;
+    }
     
     if (i_used == TRUE_7ED) { // enter startmode if we used 'i'
+
+        if(n_used == TRUE_7ED) { g_choicemode = MODE_NO; }
+        if(y_used == TRUE_7ED) { g_choicemode = MODE_YES; }
+
         returnval = startmode(optarg_copy);
         if (returnval == 1) {
             free(optarg_copy);

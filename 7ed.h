@@ -25,7 +25,7 @@ int count_lines_in_file_posix(char filename[], size_t *lines);
 
 void confirm();
 
-int choice();
+int choice(uint8_t mode);
 
 void shuffle(char arr[], int n);
 

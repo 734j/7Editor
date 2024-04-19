@@ -8,6 +8,8 @@
 #include "i_validation.h"
 #include <stdint.h>
 
+extern uint8_t g_choicemode;
+
 int check_L_linecount(uint64_t Flines, uint64_t focus, int mode) { // Check if you are trying to modify or move to lines under 1 or lines that are over the total amount of lines in the file.
                                                                     // Mode N allows us to go to line 0 because N needs it.
     if (mode == MODE_N) { 
@@ -223,7 +225,7 @@ int call_N_plus_continue(char *multiple, uint64_t focus, char *filename) {
     }
     
     if (newlines_to_add > 1) {
-        choice_yesno = choice();
+        choice_yesno = choice(g_choicemode);
     }
     if (choice_yesno == 1) { return -1; }
     
@@ -288,7 +290,7 @@ int call_X_plus_continue(char *multiple, uint64_t focus, char *filename, uint64_
         return -1; 
     }
 
-    if (choice() == 1) { return -1; }
+    if (choice(g_choicemode) == 1) { return -1; }
 
     for(uint64_t count = 0 ; count < amount_of_lines_to_remove ; count++) { // This is very inefficient
         remove_line_contents(filename, focus+count);
@@ -321,7 +323,7 @@ int call_X_immediate(char *multiple, uint64_t Flines, char *filename) {
         return -1;
     }
 
-    if (choice() == 1) { return -1; }    
+    if (choice(g_choicemode) == 1) { return -1; }    
 
     remove_line_contents(filename, remove_line_contents_position);
 
@@ -335,7 +337,7 @@ int call_X(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
     if (multiple[1] == '\n') { // X Will remove current line
         imm = _NA;
     
-        if(choice() == 0) {
+        if(choice(g_choicemode) == 0) {
             remove_line_contents(filename, focus);
         }
         return 0;
@@ -344,7 +346,7 @@ int call_X(char *multiple, uint64_t focus, uint64_t Flines, char *filename) {
     if (multiple[1] == '+') {
         imm = _NA;
         if (multiple[2] == '\n') {
-            if(choice() == 0) {
+            if(choice(g_choicemode) == 0) {
                 remove_line_contents(filename, focus);
             }
             return 0;
@@ -386,7 +388,7 @@ uint64_t call_D_plus_continue(char *multiple, uint64_t focus, uint64_t Flines, c
         return focus; 
     }
 
-    if (choice() == 1) { return focus; }
+    if (choice(g_choicemode) == 1) { return focus; }
 
     for(uint64_t count = 0 ; count < lines_and_newlines_to_remove ; count++) { // This is very inefficient
         remove_line_contents_and_newline(filename, focus);
@@ -420,7 +422,7 @@ uint64_t call_D_immediate(char *multiple, uint64_t focus, uint64_t Flines, char 
         return focus;
     }
 
-    if (choice() == 1) { return focus; }    
+    if (choice(g_choicemode) == 1) { return focus; }    
 
     remove_line_contents_and_newline(filename, remove_line_and_newline_position);
     if (focus == 1 && remove_line_and_newline_position == 1) {
@@ -442,7 +444,7 @@ uint64_t call_D(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
     if (multiple[1] == '\n') { // D Will remove current line
         imm = _NA;
     
-        if(choice() == 0) {
+        if(choice(g_choicemode) == 0) {
             remove_line_contents_and_newline(filename, focus);
             if (focus == 1) { return 1; }
             return focus-1;
@@ -455,7 +457,7 @@ uint64_t call_D(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
     if (multiple[1] == '+') {
         imm = _NA;
         if (multiple[2] == '\n') {
-            if(choice() == 0) {
+            if(choice(g_choicemode) == 0) {
                 remove_line_contents_and_newline(filename, focus);
                 if (focus == 1) { return 1; }
                 return focus-1;

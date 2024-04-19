@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 extern uint8_t new;
+extern uint8_t g_choicemode;
 
 int delete_specified_newline(char filename[], long focus) { // special version of write_line that does as the name says
 
@@ -273,7 +274,7 @@ int editmode(char filename[], uint64_t focus) { // the editing interface
             return 0;
         }
 
-        int yesno = choice();
+        int yesno = choice(g_choicemode);
 
         if (yesno == 1) {
             return 0;

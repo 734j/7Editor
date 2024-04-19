@@ -9,36 +9,33 @@
 int choice(uint8_t mode) {
 
     char choice;
+    char modechoice;
 
-    if (mode == MODE_NORMAL) {
-        do {
+    do {
 
-        fputs("[Y / N] ? ", stdout);
+    if (mode == MODE_NORMAL) { fputs("[Y / N] ? ", stdout); }
+    if (mode == MODE_YES) { fputs("[Y / n] ? ", stdout); }
+    if (mode == MODE_NO) { fputs("[y / N] ? ", stdout); }
 
-        choice = getchar();
-        if (choice == '\n') { continue; }
+    choice = getchar();
+    if (choice == '\n' && mode == MODE_YES) { modechoice = 'Y'; choice = modechoice; goto modeskip;}
+    if (choice == '\n' && mode == MODE_NO) { modechoice = 'N'; choice = modechoice; goto modeskip;}
+    if (choice == '\n' && mode == MODE_NORMAL) { continue; }
 
-        while ('\n' != getchar());
+    while ('\n' != getchar());
 
-        } while ( (choice != 'Y') && (choice != 'y') && (choice != 'N') && (choice != 'n') );
+    modeskip:
 
-        if ( (choice == 'Y') || (choice == 'y') ) 
-        {
-            return 0;
-        }
+    } while ( (choice != 'Y') && (choice != 'y') && (choice != 'N') && (choice != 'n') );
 
-        if ((choice == 'N') || (choice == 'n') )
-        {
-            return 1;
-        }
+    if ( (choice == 'Y') || (choice == 'y') ) 
+    {
+        return 0;
     }
 
-    if (mode == MODE_YES) {
-        
-    }
-
-    if (mode == MODE_NO) {
-        
+    if ((choice == 'N') || (choice == 'n') )
+    {
+        return 1;
     }
 
     return EXIT_FAILURE;
