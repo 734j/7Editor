@@ -24,9 +24,9 @@ int choice(uint8_t mode) {
 
     while ('\n' != getchar());
 
-    modeskip:
-
     } while ( (choice != 'Y') && (choice != 'y') && (choice != 'N') && (choice != 'n') );
+
+    modeskip:
 
     if ( (choice == 'Y') || (choice == 'y') ) 
     {

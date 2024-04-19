@@ -10,7 +10,9 @@
 #define USAGE "7ed [OPTION] [FILENAME]\n" \
               "\nVALID COMMAND-LINE OPTIONS:\n\n"\
               "    -v   Prints out the version number\n"\
-              "    -i   Input file\n\n"\
+              "    -i   Input file\n"\
+              "    -y   Answer YES when pressing enter button to [Y / N] questions in the program\n"\
+              "    -n   Answer NO when pressing enter button to [Y / N] questions in the program\n\n"\
               "To use the text editor you need to enter appropriate commands.\n"\
               "The prompt will display the current 'Focus' which is the line number\n"\
               "that you are currently focused on. So for example the prompt can look like this:\n"\
@@ -47,6 +49,7 @@
               "    'D', 'D+', 'D+1' Are all valid but do the same thing. \n"\
               "    'D10' Would remove line 10 entirely.\n"\
               "    'D+10' Would remove the current line entirely as well as entirely remove the next 9 lines.\n"\
+              "    \n"\
             
 
 #define PROGRAM_NAME "7ed"
@@ -120,7 +123,15 @@ int main (int argc, char *argv[]) {
         free(optarg_copy);
     }
     if (v_used == TRUE_7ED) { // print version
+        free(optarg_copy);
         fprintf(stdout, "7Editor Version %d\n", VERSION);
+        return EXIT_FAILURE;
+    }
+
+    if (n_used == TRUE_7ED || y_used == TRUE_7ED) {
+        free(optarg_copy);
+        fprintf(stderr, "%s", USAGE);
+        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
