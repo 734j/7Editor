@@ -6,28 +6,39 @@
 #include <string.h>
 #include <stdint.h>
 
-int choice() {
+int choice(uint8_t mode) {
+
     char choice;
 
-    do {
+    if (mode == MODE_NORMAL) {
+        do {
 
-    fputs("[Y / N] ? ", stdout);
+        fputs("[Y / N] ? ", stdout);
 
-    choice = getchar();
-    if (choice == '\n') { continue; }
+        choice = getchar();
+        if (choice == '\n') { continue; }
 
-    while ('\n' != getchar());
+        while ('\n' != getchar());
 
-    } while ( (choice != 'Y') && (choice != 'y') && (choice != 'N') && (choice != 'n') );
+        } while ( (choice != 'Y') && (choice != 'y') && (choice != 'N') && (choice != 'n') );
 
-    if ( (choice == 'Y') || (choice == 'y') ) 
-    {
-        return 0;
+        if ( (choice == 'Y') || (choice == 'y') ) 
+        {
+            return 0;
+        }
+
+        if ((choice == 'N') || (choice == 'n') )
+        {
+            return 1;
+        }
     }
 
-    if ((choice == 'N') || (choice == 'n') )
-    {
-        return 1;
+    if (mode == MODE_YES) {
+        
+    }
+
+    if (mode == MODE_NO) {
+        
     }
 
     return EXIT_FAILURE;
