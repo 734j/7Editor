@@ -152,7 +152,7 @@ int check_end_newline(char filename[]) { // function that checks if a file ends 
 
 }
 
-int new_line(char filename[], long long new_line_pos_temp) { // creates a new line within a file after a specified line number
+int new_line(char filename[], long long new_line_pos_temp, uint64_t amount_of_lines) { // creates a new line within a file after a specified line number
 
         long long new_line_pos;
         if (new_line_pos_temp < 0) {
@@ -193,13 +193,24 @@ int new_line(char filename[], long long new_line_pos_temp) { // creates a new li
             }
 
             size_t len = strlen(line);
-            char to_be_written[len+2];
-            to_be_written[0] = '\n';
-            to_be_written[1] = '\0';
+
+            // Get length of line
+            // Get length of amount of newlines
+            // put them both in a buffer
+            // Input the buffer into write_line
+            size_t total_size = amount_of_lines+len+2;
+            char *to_be_written = malloc(total_size);
+            uint64_t i = 0;
+             for ( ; i < amount_of_lines ; i++) {
+                to_be_written[i] = '\n';
+            }
+            to_be_written[i+1] = '\0';
+
             strcat(to_be_written, line);
             
-            write_line(filename, new_line_pos+1, to_be_written, len+1);
+            write_line(filename, new_line_pos+1, to_be_written, total_size-1);
             free(line);
+            free(to_be_written);
         }
 
     return 0;
@@ -222,7 +233,7 @@ int remove_line_contents(char *filename, uint64_t focus) { // removes contents o
     write_line(filename, focus, editbuffer, 1); // remove contents in line
 
     if (cen == -1) { // put newline at end if cen == -1
-        new_line(filename, focus-1);
+        new_line(filename, focus-1, 1);
     }
     free(line);
     return 0;

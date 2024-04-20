@@ -35,7 +35,7 @@ int get_line(char *filename, long focus, char **line, size_t *start);
 
 int editmode(char filename[], uint64_t focus);
 
-int new_line(char filename[], long long new_line_pos_temp);
+int new_line(char filename[], long long new_line_pos_temp, uint64_t amount_of_lines);
 
 int remove_line_contents(char filename[], uint64_t focus);
 

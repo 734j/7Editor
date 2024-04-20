@@ -197,7 +197,7 @@ int call_N_immediate(char *multiple, uint64_t Flines, char *filename) {
         return -1;
     }
 
-    new_line(filename, newline_insert_position);
+    new_line(filename, newline_insert_position, 1);
 
     return 0;
 
@@ -229,9 +229,7 @@ int call_N_plus_continue(char *multiple, uint64_t focus, char *filename) {
     }
     if (choice_yesno == 1) { return -1; }
     
-    for(uint64_t count = 0 ; count < newlines_to_add ; count++) { // This is very inefficient if you are adding thousands of lines but why would you wanna do that anyway?
-        new_line(filename, focus);
-    }
+    new_line(filename, focus, newlines_to_add);
 
     return 0;
 
@@ -243,14 +241,14 @@ uint64_t call_N(char *multiple, uint64_t focus, uint64_t Flines, char *filename)
 
     if (multiple[1] == '\n') { // N will add just 1 line.
         imm = _NA;
-        new_line(filename, focus);
+        new_line(filename, focus, 1);
         return 0;
     }
 
     if (multiple[1] == '+') { // N+ is the same as N. It will only add 1 line.
         imm = _NA;
         if (multiple[2] == '\n') {
-            new_line(filename, focus);
+            new_line(filename, focus, 1);
             return 0;
         }
 

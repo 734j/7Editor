@@ -1,6 +1,4 @@
 TODO list. This is mostly so i can plan more granularly and remember small stuff i was working on last time and what i should prioritise first. 
 This is not my overall big planning board. (1 highest prio, 10 lowest)  
 
-1 - Add some quality of life features
-2 - Add a way to specify default Y or N.
-2 - Make new_line and remove_line_contents more efficient. Maybe allow specifying amount of lines to add so we dont need to call the function too many times.
+1 - Make new_line and remove_line_contents more efficient. Maybe allow specifying amount of lines to add so we dont need to call the function too many times.
