@@ -194,21 +194,17 @@ int new_line(char filename[], long long new_line_pos_temp, uint64_t amount_of_li
 
             size_t len = strlen(line);
 
-            // Get length of line
-            // Get length of amount of newlines
-            // put them both in a buffer
-            // Input the buffer into write_line
-            size_t total_size = amount_of_lines+len+2;
-            char *to_be_written = malloc(total_size);
+            size_t total_size = (size_t)amount_of_lines+len+1; // Calculate total size
+            char *to_be_written = malloc(total_size); // Allocate memory with total_size size
             uint64_t i = 0;
              for ( ; i < amount_of_lines ; i++) {
-                to_be_written[i] = '\n';
+                to_be_written[i] = '\n'; // Insert newlines we wanna input
             }
-            to_be_written[i+1] = '\0';
+            to_be_written[i] = '\0'; // Insert null character so strcat works properly
 
-            strcat(to_be_written, line);
+            strcat(to_be_written, line); // Write actual line contents after all the newlines
             
-            write_line(filename, new_line_pos+1, to_be_written, total_size-1);
+            write_line(filename, new_line_pos+1, to_be_written, total_size-1); // Actually write the changes
             free(line);
             free(to_be_written);
         }
