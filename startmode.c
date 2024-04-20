@@ -8,6 +8,7 @@
 #include "i_validation.h"
 #include "process_multiples.h"
 #include <stdint.h>
+#include <sys/stat.h>
 
 extern int clfstdin_doubleprint;
 uint8_t new = 0;
@@ -111,6 +112,14 @@ uint8_t check_if_file_exists(char *filename) { // If the file exists then do not
 int fe_stop = 0;
 
 int startmode(char filename[]) {
+
+    struct stat sb;
+    stat(filename, &sb);
+
+    if (sb.st_mode & S_IFDIR) { // check if its a directory
+        fprintf(stderr, "This is a directory\n");
+        exit(EXIT_FAILURE);
+    }
 
     uint8_t file_existence = check_if_file_exists(filename);
     if (fe_stop == 0) {
