@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Regen 'newlinetest' file so i dont have to manually repair it to its original state
+
 filename="testgrounds/newlinetest"
 
 rm -f $filename

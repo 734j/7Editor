@@ -178,7 +178,13 @@ int new_line(char filename[], long long new_line_pos_temp, uint64_t amount_of_li
                     fputc('\n', file);
                     fputc('\n', file);
                     fclose(file);
-                    return 0;
+                    
+                    if(amount_of_lines == 1) {
+                        return 0;
+                    }
+                    if(amount_of_lines > 1) {
+                        amount_of_lines = amount_of_lines-1;
+                    }
                 }
 
             }
