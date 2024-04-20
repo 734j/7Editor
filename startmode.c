@@ -113,14 +113,6 @@ int fe_stop = 0;
 
 int startmode(char filename[]) {
 
-    struct stat sb;
-    stat(filename, &sb);
-
-    if (sb.st_mode & S_IFDIR) { // check if its a directory
-        fprintf(stderr, "This is a directory\n");
-        exit(EXIT_FAILURE);
-    }
-
     uint8_t file_existence = check_if_file_exists(filename);
     if (fe_stop == 0) {
         if (file_existence == FILE_NOT_FOUND) {
@@ -131,6 +123,15 @@ int startmode(char filename[]) {
             fclose(file);
         }
     }
+
+    struct stat sb;
+    stat(filename, &sb);
+
+    if (sb.st_mode & S_IFDIR) { // check if its a directory
+        fprintf(stderr, "This is a directory\n");
+        exit(EXIT_FAILURE);
+    }
+
     // The entry to the program. Count lines and display the count. Also show which file is being edited.
     uint64_t Flines;
 
